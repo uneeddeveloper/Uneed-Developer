@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ServicesCatalog } from "@/components/services/services-catalog";
+import { CtaStrip } from "@/components/layout/cta-strip";
 
 export const metadata: Metadata = {
   title: "Layanan — Uneed Developer",
@@ -14,6 +15,7 @@ export default function LayananPage() {
       <Suspense>
         <ServicesCatalog />
       </Suspense>
+      <CtaStrip />
     </main>
   );
 }

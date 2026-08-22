@@ -38,23 +38,22 @@ export function ServicesSection() {
             </p>
           </motion.div>
 
-          <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICE_CATEGORIES.map((category, i) => (
-              <motion.div
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+            className="mt-14 -mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {SERVICE_CATEGORIES.map((category) => (
+              <div
                 key={category.slug}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{
-                  duration: 0.6,
-                  delay: (i % 3) * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                className="w-72 shrink-0 snap-start sm:w-80"
               >
                 <ServiceCategoryCard category={category} onOpen={setActive} />
-              </motion.div>
+              </div>
             ))}
-          </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
