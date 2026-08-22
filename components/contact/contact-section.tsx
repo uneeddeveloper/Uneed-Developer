@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
+import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { InstagramIcon, WhatsappIcon } from "@/components/ui/social-icons";
 import { CONTACT, waLink } from "@/lib/content";
 
@@ -58,8 +59,9 @@ export function ContactSection() {
   }
 
   return (
-    <section id="kontak" className="scroll-mt-24 py-32 sm:py-40">
-      <Container className="flex gap-8">
+    <section id="kontak" className="relative scroll-mt-24 py-32 sm:py-40">
+      <AmbientGlow />
+      <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
         <div className="min-w-0 flex-1">
         <motion.div
@@ -92,7 +94,7 @@ export function ContactSection() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-2xl border border-panel-line bg-panel p-4 transition-colors hover:border-circuit/60"
+                className="glass group flex items-center gap-4 rounded-2xl p-4 transition-colors hover:border-circuit/60"
               >
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
                   <Icon width={18} height={18} />
@@ -108,7 +110,7 @@ export function ContactSection() {
               </a>
             ))}
 
-            <div className="flex items-start gap-4 rounded-2xl border border-panel-line bg-panel p-4">
+            <div className="glass flex items-start gap-4 rounded-2xl p-4">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
                 <MapPin size={18} />
               </div>

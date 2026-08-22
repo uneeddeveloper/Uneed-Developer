@@ -55,9 +55,9 @@ export function ServiceDrawer({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col border-l border-panel-line bg-panel"
+            className="glass fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col"
           >
-            <div className="flex items-start justify-between gap-4 border-b border-panel-line px-6 py-6">
+            <div className="flex items-start justify-between gap-4 border-b border-white/5 px-6 py-6">
               <div className="flex items-start gap-4">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
                   <Icon size={20} />

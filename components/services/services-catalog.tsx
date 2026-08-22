@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
+import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { SERVICE_CATEGORIES, type ServiceCategoryMeta } from "@/lib/content";
 import { ServiceCategoryCard } from "./service-category-card";
 import { ServiceDrawer } from "./service-drawer";
@@ -24,8 +25,9 @@ export function ServicesCatalog() {
   }, []);
 
   return (
-    <section className="py-32 sm:py-40">
-      <Container className="flex gap-8">
+    <section className="relative py-32 sm:py-40">
+      <AmbientGlow />
+      <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
         <div className="min-w-0 flex-1">
           <motion.div

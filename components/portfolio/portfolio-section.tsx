@@ -4,13 +4,15 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
+import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { PORTFOLIO } from "@/lib/content";
 import { PortfolioCard } from "./portfolio-card";
 
 export function PortfolioSection() {
   return (
-    <section id="portfolio" className="scroll-mt-24 py-32 sm:py-40">
-      <Container className="flex gap-8">
+    <section id="portfolio" className="relative scroll-mt-24 py-32 sm:py-40">
+      <AmbientGlow className="opacity-50" />
+      <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
         <div className="min-w-0 flex-1">
           <motion.div

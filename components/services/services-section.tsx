@@ -8,6 +8,7 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
+import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { SERVICE_CATEGORIES, type ServiceCategoryMeta } from "@/lib/content";
 import { ServiceCategoryCard } from "./service-category-card";
 import { ServiceDrawer } from "./service-drawer";
@@ -16,8 +17,9 @@ export function ServicesSection() {
   const [active, setActive] = useState<ServiceCategoryMeta | null>(null);
 
   return (
-    <section id="layanan" className="scroll-mt-24 py-32 sm:py-40">
-      <Container className="flex gap-8">
+    <section id="layanan" className="relative scroll-mt-24 py-32 sm:py-40">
+      <AmbientGlow />
+      <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
         <div className="min-w-0 flex-1">
           <motion.div

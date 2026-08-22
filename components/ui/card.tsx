@@ -13,7 +13,7 @@ export function Card({
     <div
       onMouseMove={handleSpotlightMove}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-panel-line bg-panel p-6 transition-all duration-300 hover:-translate-y-1 hover:border-circuit/60",
+        "glass group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-circuit/60",
         className
       )}
     >

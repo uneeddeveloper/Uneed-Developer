@@ -47,6 +47,14 @@
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
 }
 
+/* Frosted glass surface — needs a colored ambient blob behind it to read as "glass". */
+.glass {
+  background: color-mix(in srgb, var(--color-panel) 55%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--color-text-hi) 10%, transparent);
+}
+
 @keyframes pulse-node {
   0%, 100% {
     opacity: 0.45;

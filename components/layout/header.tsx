@@ -34,9 +34,9 @@ export function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-colors duration-300",
+        "sticky top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "border-b border-panel-line bg-ink/80 backdrop-blur-md"
+          ? "glass border-b border-white/5"
           : "border-b border-transparent bg-transparent"
       )}
     >
@@ -92,7 +92,7 @@ export function Header() {
 
       {menuOpen && (
         <nav
-          className="border-t border-panel-line bg-ink px-6 py-4 md:hidden"
+          className="glass border-t border-white/5 px-6 py-4 md:hidden"
           aria-label="Navigasi mobile"
         >
           <ul className="flex flex-col gap-1">

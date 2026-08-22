@@ -8,6 +8,7 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
+import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { cn } from "@/lib/utils";
 import { PORTFOLIO, SERVICE_CATEGORIES } from "@/lib/content";
 import { SERVICE_ICONS } from "@/components/services/service-icons";
@@ -27,8 +28,9 @@ export function PortfolioCatalog() {
   const EmptyIcon = activeCategory ? (SERVICE_ICONS[activeCategory.slug] ?? Blocks) : Blocks;
 
   return (
-    <section className="py-32 sm:py-40">
-      <Container className="flex gap-8">
+    <section className="relative py-32 sm:py-40">
+      <AmbientGlow className="opacity-50" />
+      <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
         <div className="min-w-0 flex-1">
           <motion.div

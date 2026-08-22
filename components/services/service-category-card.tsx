@@ -22,7 +22,7 @@ export function ServiceCategoryCard({
     >
       <div
         onMouseMove={handleSpotlightMove}
-        className="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-xl border border-panel-line bg-gradient-to-br from-panel to-ink transition-colors duration-300 group-hover:border-circuit/60"
+        className="glass relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-xl transition-colors duration-300 group-hover:border-circuit/60"
       >
         <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
         <div

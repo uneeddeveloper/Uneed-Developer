@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
+import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { CONTACT } from "@/lib/content";
 import { handleSpotlightMove, spotlightStyle } from "@/lib/utils";
 
@@ -28,6 +29,7 @@ export function Hero() {
       onMouseMove={handleSpotlightMove}
       className="relative overflow-hidden pt-32 pb-32 sm:pt-44 sm:pb-40"
     >
+      <AmbientGlow />
       <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
@@ -78,7 +80,7 @@ export function Hero() {
 
           <motion.div
             {...fadeUp(0.4)}
-            className="mt-12 flex flex-wrap gap-x-8 gap-y-2 border-t border-panel-line pt-6"
+            className="glass mt-12 inline-flex flex-wrap gap-x-8 gap-y-2 rounded-full px-6 py-3.5"
           >
             {TRUST_BADGES.map(({ icon: Icon, label }) => (
               <div
