@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { PortfolioSection } from "@/components/portfolio/portfolio-section";
+import { PortfolioCatalog } from "@/components/portfolio/portfolio-catalog";
 
 export const metadata: Metadata = {
   title: "Portfolio — Uneed Developer",
-  description: "Kumpulan project yang sudah dikerjakan tim Uneed Developer.",
+  description: "Kumpulan project yang sudah dikerjakan tim Uneed Developer, dikelompokkan per kategori layanan.",
 };
 
 export default function PortfolioPage() {
   return (
     <main>
-      <PortfolioSection />
+      <PortfolioCatalog />
     </main>
   );
 }

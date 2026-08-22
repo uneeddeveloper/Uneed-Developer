@@ -187,7 +187,8 @@ export type PortfolioItem = {
   slug: string;
   title: string;
   type: string;
-  category: string;
+  /** References a SERVICE_CATEGORIES slug — portfolio is grouped by the service that produced it. */
+  categorySlug: string;
   description: string;
   detail: string;
   /** Some projects may not have a live link — the detail page hides the button when unset. */
@@ -195,12 +196,16 @@ export type PortfolioItem = {
   image: string;
 };
 
+export function serviceCategoryName(slug: string) {
+  return SERVICE_CATEGORIES.find((c) => c.slug === slug)?.name ?? slug;
+}
+
 export const PORTFOLIO: PortfolioItem[] = [
   {
     slug: "pt-triputra-khatulistiwa",
     title: "PT. Triputra Khatulistiwa",
     type: "WEB APP",
-    category: "Company Profile",
+    categorySlug: "web-application",
     description: "Web company profile PT. Triputra Khatulistiwa",
     detail:
       "Company profile untuk PT. Triputra Khatulistiwa, perusahaan logistik yang melayani pengiriman ke seluruh Kalimantan Barat. Website ini menampilkan layanan, jangkauan pengiriman, dan kanal kontak agar calon klien bisa langsung menghubungi tim mereka.",
@@ -211,7 +216,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "las-beauty",
     title: "LAS Beauty",
     type: "WEB APP",
-    category: "Company Profile",
+    categorySlug: "web-application",
     description: "Web company profile LAS Brightening",
     detail:
       "Company profile untuk LAS Brightening, lini produk skincare pencerah kulit. Website menampilkan katalog produk beserta manfaatnya dengan tampilan yang bersih dan sesuai identitas brand kecantikan.",
@@ -222,7 +227,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "undangan-digital",
     title: "Undangan Digital",
     type: "WEB APP",
-    category: "Undangan Digital",
+    categorySlug: "web-application",
     description: "Undangan Digital Template",
     detail:
       "Template undangan pernikahan digital yang bisa dipersonalisasi — nama mempelai, tanggal acara, lokasi, hingga galeri foto — sebagai alternatif undangan cetak yang lebih praktis dibagikan lewat chat.",
@@ -233,7 +238,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "smart-recruitment",
     title: "Smart Recruitment",
     type: "WEB APP",
-    category: "Web Application",
+    categorySlug: "custom-system",
     description: "Web penerimaan karyawan terintegrasi AI",
     detail:
       "Platform penerimaan karyawan yang mengintegrasikan proses seleksi dengan bantuan AI, mulai dari pendaftaran kandidat hingga portal untuk memantau status lamaran secara transparan.",
@@ -244,7 +249,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "edugate",
     title: "EduGate",
     type: "WEB APP",
-    category: "Web Application",
+    categorySlug: "web-application",
     description: "Website Pengelolaan Tugas",
     detail:
       "Aplikasi web untuk pengelolaan tugas di lingkungan pendidikan — membantu pengajar mendistribusikan tugas dan siswa memantau serta mengumpulkan pekerjaan mereka dalam satu tempat.",
@@ -255,7 +260,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "raneen-coffee",
     title: "Raneen Coffee",
     type: "WEB APP",
-    category: "Company Profile",
+    categorySlug: "web-application",
     description: "Web Coffee + E-Book",
     detail:
       "Website untuk brand kopi Raneen Coffee, menampilkan profil coffee shop sekaligus e-book seputar kopi sebagai konten tambahan untuk menarik pengunjung.",
@@ -266,7 +271,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "service-ac",
     title: "Service AC",
     type: "WEB APP",
-    category: "Company Profile",
+    categorySlug: "web-application",
     description: "Web Jasa Service AC",
     detail:
       "Website untuk usaha jasa service dan perawatan AC di Pontianak — menampilkan daftar layanan, jam operasional, dan kanal pemesanan agar pelanggan mudah menghubungi teknisi.",
@@ -277,7 +282,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "js-beauty",
     title: "J&S Beauty",
     type: "WEB APP",
-    category: "Company Profile",
+    categorySlug: "web-application",
     description: "Web Haircut & Stylish Panggilan",
     detail:
       "Website untuk salon kecantikan panggilan J&S Beauty, menampilkan daftar layanan haircut dan styling beserta cara pemesanan untuk layanan panggilan ke rumah.",
@@ -288,7 +293,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     slug: "sitara",
     title: "SITARA",
     type: "WEB APP",
-    category: "Web Application",
+    categorySlug: "custom-system",
     description: "Sistem Tes Akademik Terpadu",
     detail:
       "Sistem Tes Akademik Terpadu (SITARA) — platform ujian akademik daring lengkap dengan manajemen soal, sesi ujian terjadwal, dan rekap hasil peserta.",

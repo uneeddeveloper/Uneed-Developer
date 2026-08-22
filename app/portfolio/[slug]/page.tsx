@@ -6,7 +6,7 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
-import { PORTFOLIO } from "@/lib/content";
+import { PORTFOLIO, serviceCategoryName } from "@/lib/content";
 
 export function generateStaticParams() {
   return PORTFOLIO.map((item) => ({ slug: item.slug }));
@@ -47,7 +47,7 @@ export default async function PortfolioDetailPage({
         </Link>
 
         <div className="mt-8">
-          <SectionLabel>{item.category}</SectionLabel>
+          <SectionLabel>{serviceCategoryName(item.categorySlug)}</SectionLabel>
           <h1 className="mt-5 max-w-2xl font-display text-4xl text-text-hi sm:text-5xl">
             {item.title}
           </h1>
