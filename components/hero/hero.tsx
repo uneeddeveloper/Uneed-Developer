@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
 import { CONTACT } from "@/lib/content";
+import { handleSpotlightMove, spotlightStyle } from "@/lib/utils";
 
 const TRUST_BADGES = [
   { icon: Users, label: "Tim Expert" },
@@ -23,8 +24,16 @@ const fadeUp = (delay = 0) => ({
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-32 pb-32 sm:pt-44 sm:pb-40">
+    <section
+      onMouseMove={handleSpotlightMove}
+      className="relative overflow-hidden pt-32 pb-32 sm:pt-44 sm:pb-40"
+    >
       <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute inset-0 transition-opacity duration-500"
+        style={spotlightStyle("59, 158, 255", 640, 0.08)}
+        aria-hidden="true"
+      />
       <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
 

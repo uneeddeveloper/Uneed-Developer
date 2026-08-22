@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { PortfolioItem } from "@/lib/content";
+import { handleSpotlightMove, spotlightStyle } from "@/lib/utils";
 
 export function PortfolioCard({
   item,
@@ -21,13 +22,20 @@ export function PortfolioCard({
       transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link href={`/portfolio/${item.slug}`} className="group block">
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-ink">
+        <div
+          onMouseMove={handleSpotlightMove}
+          className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-panel-line bg-ink transition-colors duration-300 group-hover:border-circuit/60"
+        >
           <Image
             src={item.image}
             alt={item.title}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-0 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100"
+            style={spotlightStyle("255, 255, 255", 280, 0.5)}
           />
         </div>
 
