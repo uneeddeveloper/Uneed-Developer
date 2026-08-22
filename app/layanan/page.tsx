@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ServicesCatalog } from "@/components/services/services-catalog";
 
 export const metadata: Metadata = {
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 export default function LayananPage() {
   return (
     <main>
-      <ServicesCatalog />
+      <Suspense>
+        <ServicesCatalog />
+      </Suspense>
     </main>
   );
 }

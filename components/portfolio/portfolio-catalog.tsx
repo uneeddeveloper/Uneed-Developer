@@ -1,28 +1,30 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Blocks } from "lucide-react";
 import { Container } from "@/components/ui/container";
+import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
 import { cn } from "@/lib/utils";
 import { PORTFOLIO, SERVICE_CATEGORIES } from "@/lib/content";
+import { SERVICE_ICONS } from "@/components/services/service-icons";
 import { PortfolioCard } from "./portfolio-card";
 
 export function PortfolioCatalog() {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
-  const categories = useMemo(
-    () =>
-      SERVICE_CATEGORIES.filter((category) =>
-        PORTFOLIO.some((item) => item.categorySlug === category.slug)
-      ),
-    []
-  );
+  const activeCategory = activeSlug
+    ? SERVICE_CATEGORIES.find((c) => c.slug === activeSlug)
+    : null;
 
   const items = activeSlug
     ? PORTFOLIO.filter((item) => item.categorySlug === activeSlug)
     : PORTFOLIO;
+
+  const EmptyIcon = activeCategory ? (SERVICE_ICONS[activeCategory.slug] ?? Blocks) : Blocks;
 
   return (
     <section className="py-32 sm:py-40">
@@ -58,7 +60,7 @@ export function PortfolioCatalog() {
             >
               Semua
             </button>
-            {categories.map((category) => (
+            {SERVICE_CATEGORIES.map((category) => (
               <button
                 key={category.slug}
                 type="button"
@@ -76,18 +78,47 @@ export function PortfolioCatalog() {
           </div>
 
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSlug ?? "all"}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {items.map((item, i) => (
-                <PortfolioCard key={item.slug} item={item} delay={(i % 3) * 0.06} />
-              ))}
-            </motion.div>
+            {items.length > 0 ? (
+              <motion.div
+                key={activeSlug ?? "all"}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {items.map((item, i) => (
+                  <PortfolioCard key={item.slug} item={item} delay={(i % 3) * 0.06} />
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                key={activeSlug ?? "all"}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-16 flex flex-col items-center rounded-2xl border border-dashed border-panel-line px-6 py-20 text-center"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
+                  <EmptyIcon size={24} />
+                </div>
+                <h3 className="mt-6 font-display text-lg text-text-hi">
+                  Belum ada project {activeCategory?.name} yang tampil di sini
+                </h3>
+                <p className="mt-2 max-w-sm text-sm leading-relaxed text-text-lo">
+                  Tapi tim kami sudah siap kerjakan project di kategori ini —
+                  pesan sekarang dan jadi salah satu yang pertama tampil di
+                  portfolio.
+                </p>
+                <Button asChild variant="primary" className="mt-6">
+                  <Link href={`/layanan?kategori=${activeCategory?.slug}`}>
+                    Pesan Layanan Ini
+                    <ArrowRight size={16} />
+                  </Link>
+                </Button>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </Container>

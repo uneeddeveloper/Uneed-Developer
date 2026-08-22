@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { SectionLabel } from "@/components/ui/section-label";
@@ -11,6 +12,16 @@ import { ServiceDrawer } from "./service-drawer";
 
 export function ServicesCatalog() {
   const [active, setActive] = useState<ServiceCategoryMeta | null>(null);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const slug = searchParams.get("kategori");
+    if (!slug) return;
+    const category = SERVICE_CATEGORIES.find((c) => c.slug === slug);
+    if (category) setActive(category);
+    // Only run once on mount — the drawer's own state owns things after that.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="py-32 sm:py-40">
