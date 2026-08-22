@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/*
+  Uneed Developer design tokens.
+  Palette is derived directly from the brand mark: circuit traces (blue)
+  resolving into an upward arrow (green) — "engineering flows into growth".
+*/
+@theme {
+  --color-ink: #060b14;
+  --color-panel: #0d1622;
+  --color-panel-line: #17222f;
+
+  --color-circuit: #3b9eff;
+  --color-circuit-dim: #1c4e7d;
+
+  --color-growth: #3ddc84;
+  --color-growth-dim: #1f7a4e;
+
+  --color-signal: #cffce8;
+  --color-text-hi: #eaf2ff;
+  --color-text-lo: #7c8ca6;
+
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-plus-jakarta), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-text-hi);
+  }
+
+  ::selection {
+    background: var(--color-growth);
+    color: var(--color-ink);
+  }
+}
+
+/* Faint PCB-style grid, fades out toward the edges. Used behind hero/section bg. */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--color-panel-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-panel-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+}
+
+@keyframes pulse-node {
+  0%, 100% {
+    opacity: 0.45;
+    transform: translateX(-50%) scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
