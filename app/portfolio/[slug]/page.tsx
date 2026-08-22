@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { SectionLabel } from "@/components/ui/section-label";
+import { Badge } from "@/components/ui/badge";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { CtaStrip } from "@/components/layout/cta-strip";
 import { PORTFOLIO, serviceCategoryName } from "@/lib/content";
@@ -51,7 +51,7 @@ export default async function PortfolioDetailPage({
         </Link>
 
         <div className="mt-8">
-          <SectionLabel>{serviceCategoryName(item.categorySlug)}</SectionLabel>
+          <Badge>{serviceCategoryName(item.categorySlug)}</Badge>
           <h1 className="mt-5 max-w-2xl font-display text-4xl text-text-hi sm:text-5xl">
             {item.title}
           </h1>

@@ -3,11 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
-import { SectionLabel } from "@/components/ui/section-label";
-import { SignalTrace } from "@/components/ui/signal-trace";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { ScrollRow } from "@/components/ui/scroll-row";
 import { SERVICE_CATEGORIES, type ServiceCategoryMeta } from "@/lib/content";
@@ -20,56 +18,39 @@ export function ServicesSection() {
   return (
     <section id="layanan" className="relative scroll-mt-24 py-24 sm:py-32">
       <AmbientGlow />
-      <Container className="relative flex gap-8">
-        <SignalTrace className="hidden self-stretch lg:block" />
-        <div className="min-w-0 flex-1">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <SectionLabel>layanan kami</SectionLabel>
-            <h2 className="mt-5 max-w-xl font-display text-4xl text-text-hi sm:text-5xl">
-              Solusi Digital Komprehensif
-            </h2>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-text-lo">
-              Tujuh kategori layanan, dari laporan otomatis sampai maintenance
-              berkelanjutan. Klik untuk lihat paket & detailnya.
-            </p>
-          </motion.div>
+      <Container className="relative">
+        <SectionHeading
+          label="Layanan kami"
+          title="Solusi Digital Komprehensif"
+          description="Tujuh kategori layanan, dari laporan otomatis sampai maintenance berkelanjutan. Klik untuk lihat paket & detailnya."
+          action={
+            <Link
+              href="/layanan"
+              className="group inline-flex items-center gap-3 rounded-full py-2 pl-4 pr-2 text-sm text-text-hi transition-colors duration-200 hover:text-growth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit"
+            >
+              Lihat semua & pesan
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 transition-colors duration-200 group-hover:border-growth/60">
+                <ArrowUpRight size={15} />
+              </span>
+            </Link>
+          }
+        />
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6 }}
-            className="mt-12"
-          >
-            <ScrollRow label="daftar layanan">
-              {SERVICE_CATEGORIES.map((category) => (
-                <div key={category.slug} className="w-72 shrink-0 snap-start sm:w-80">
-                  <ServiceCategoryCard category={category} onOpen={setActive} />
-                </div>
-              ))}
-            </ScrollRow>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-12"
-          >
-            <Button asChild variant="primary">
-              <Link href="/layanan">
-                Lihat Semua Layanan & Pesan
-                <ArrowRight size={16} />
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="mt-14"
+        >
+          <ScrollRow label="daftar layanan">
+            {SERVICE_CATEGORIES.map((category) => (
+              <div key={category.slug} className="w-72 shrink-0 snap-start sm:w-80">
+                <ServiceCategoryCard category={category} onOpen={setActive} />
+              </div>
+            ))}
+          </ScrollRow>
+        </motion.div>
       </Container>
 
       <ServiceDrawer category={active} onClose={() => setActive(null)} />

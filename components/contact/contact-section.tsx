@@ -6,8 +6,7 @@ import { Mail, MapPin, Send } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SectionLabel } from "@/components/ui/section-label";
-import { SignalTrace } from "@/components/ui/signal-trace";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { InstagramIcon, WhatsappIcon } from "@/components/ui/social-icons";
 import { CONTACT, waLink } from "@/lib/content";
@@ -61,24 +60,13 @@ export function ContactSection() {
   return (
     <section id="kontak" className="relative scroll-mt-24 py-24 sm:py-32">
       <AmbientGlow />
-      <Container className="relative flex gap-8">
-        <SignalTrace className="hidden self-stretch lg:block" />
+      <Container className="relative">
         <div className="min-w-0 flex-1">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <SectionLabel>kontak kami</SectionLabel>
-          <h2 className="mt-5 max-w-xl font-display text-4xl text-text-hi sm:text-5xl">
-            Mulai Proyek Anda Hari Ini
-          </h2>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-text-lo">
-            Siap mentransformasi bisnis Anda dengan teknologi? Hubungi kami
-            via WhatsApp atau DM Instagram untuk respon cepat.
-          </p>
-        </motion.div>
+        <SectionHeading
+          label="Kontak kami"
+          title="Mulai Proyek Anda Hari Ini"
+          description="Siap mentransformasi bisnis Anda dengan teknologi? Hubungi kami via WhatsApp atau DM Instagram untuk respon cepat."
+        />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
           <motion.div

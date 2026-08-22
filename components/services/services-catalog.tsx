@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
-import { SectionLabel } from "@/components/ui/section-label";
-import { SignalTrace } from "@/components/ui/signal-trace";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { SERVICE_CATEGORIES, type ServiceCategoryMeta } from "@/lib/content";
 import { ServiceCategoryCard } from "./service-category-card";
@@ -27,27 +26,16 @@ export function ServicesCatalog() {
   return (
     <section className="relative py-24 sm:py-32">
       <AmbientGlow />
-      <Container className="relative flex gap-8">
-        <SignalTrace className="hidden self-stretch lg:block" />
+      <Container className="relative">
         <div className="min-w-0 flex-1">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <SectionLabel>katalog layanan</SectionLabel>
-            <h1 className="mt-5 max-w-xl font-display text-4xl text-text-hi sm:text-5xl">
-              Pilih Layanan, Langsung Pesan
-            </h1>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-text-lo">
-              Klik salah satu kategori untuk lihat paket & detailnya. Setiap
-              paket bisa langsung dipesan lewat WhatsApp — pesan Anda sudah
-              otomatis terisi, tidak perlu ketik ulang dari awal.
-            </p>
-          </motion.div>
+          <SectionHeading
+            as="h1"
+            label="Katalog layanan"
+            title="Pilih Layanan, Langsung Pesan"
+            description="Klik salah satu kategori untuk lihat paket & detailnya. Setiap paket bisa langsung dipesan lewat WhatsApp — pesan Anda sudah otomatis terisi, tidak perlu ketik ulang dari awal."
+          />
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICE_CATEGORIES.map((category, i) => (
               <motion.div
                 key={category.slug}

@@ -6,8 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Blocks } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { SectionLabel } from "@/components/ui/section-label";
-import { SignalTrace } from "@/components/ui/signal-trace";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { cn } from "@/lib/utils";
 import { PORTFOLIO, SERVICE_CATEGORIES } from "@/lib/content";
@@ -30,26 +29,16 @@ export function PortfolioCatalog() {
   return (
     <section className="relative py-24 sm:py-32">
       <AmbientGlow className="opacity-50" />
-      <Container className="relative flex gap-8">
-        <SignalTrace className="hidden self-stretch lg:block" />
+      <Container className="relative">
         <div className="min-w-0 flex-1">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <SectionLabel>portfolio</SectionLabel>
-            <h1 className="mt-5 max-w-xl font-display text-4xl text-text-hi sm:text-5xl">
-              Karya Terbaik Kami
-            </h1>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-text-lo">
-              Dikelompokkan berdasarkan layanan yang dikerjakan — pilih
-              kategori untuk lihat project sejenis.
-            </p>
-          </motion.div>
+          <SectionHeading
+            as="h1"
+            label="Portfolio"
+            title="Karya Terbaik Kami"
+            description="Dikelompokkan berdasarkan layanan yang dikerjakan — pilih kategori untuk lihat project sejenis."
+          />
 
-          <div className="mt-10 flex flex-wrap gap-2.5">
+          <div className="mt-12 flex flex-wrap justify-center gap-2.5">
             <button
               type="button"
               onClick={() => setActiveSlug(null)}
