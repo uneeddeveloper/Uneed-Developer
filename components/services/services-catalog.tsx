@@ -25,7 +25,7 @@ export function ServicesCatalog() {
   }, []);
 
   return (
-    <section className="relative py-32 sm:py-40">
+    <section className="relative py-24 sm:py-32">
       <AmbientGlow />
       <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
@@ -47,7 +47,7 @@ export function ServicesCatalog() {
             </p>
           </motion.div>
 
-          <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICE_CATEGORIES.map((category, i) => (
               <motion.div
                 key={category.slug}

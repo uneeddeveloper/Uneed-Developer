@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
+import { ScrollRow } from "@/components/ui/scroll-row";
 import { SERVICE_CATEGORIES, type ServiceCategoryMeta } from "@/lib/content";
 import { ServiceCategoryCard } from "./service-category-card";
 import { ServiceDrawer } from "./service-drawer";
@@ -17,7 +18,7 @@ export function ServicesSection() {
   const [active, setActive] = useState<ServiceCategoryMeta | null>(null);
 
   return (
-    <section id="layanan" className="relative scroll-mt-24 py-32 sm:py-40">
+    <section id="layanan" className="relative scroll-mt-24 py-24 sm:py-32">
       <AmbientGlow />
       <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
@@ -43,16 +44,15 @@ export function ServicesSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
-            className="mt-14 -mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="mt-12"
           >
-            {SERVICE_CATEGORIES.map((category) => (
-              <div
-                key={category.slug}
-                className="w-72 shrink-0 snap-start sm:w-80"
-              >
-                <ServiceCategoryCard category={category} onOpen={setActive} />
-              </div>
-            ))}
+            <ScrollRow label="daftar layanan">
+              {SERVICE_CATEGORIES.map((category) => (
+                <div key={category.slug} className="w-72 shrink-0 snap-start sm:w-80">
+                  <ServiceCategoryCard category={category} onOpen={setActive} />
+                </div>
+              ))}
+            </ScrollRow>
           </motion.div>
 
           <motion.div
@@ -60,7 +60,7 @@ export function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-14"
+            className="mt-12"
           >
             <Button asChild variant="primary">
               <Link href="/layanan">

@@ -39,7 +39,7 @@ export default async function PortfolioDetailPage({
 
   return (
     <main>
-      <div className="relative overflow-hidden py-32 sm:py-40">
+      <div className="relative overflow-hidden py-24 sm:py-32">
         <AmbientGlow variant="center" className="opacity-70" />
         <Container className="relative">
         <Link

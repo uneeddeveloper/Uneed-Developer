@@ -28,7 +28,7 @@ export function PortfolioCatalog() {
   const EmptyIcon = activeCategory ? (SERVICE_ICONS[activeCategory.slug] ?? Blocks) : Blocks;
 
   return (
-    <section className="relative py-32 sm:py-40">
+    <section className="relative py-24 sm:py-32">
       <AmbientGlow className="opacity-50" />
       <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
@@ -56,8 +56,8 @@ export function PortfolioCatalog() {
               className={cn(
                 "rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.1em] transition-colors",
                 activeSlug === null
-                  ? "border-growth bg-growth text-ink"
-                  : "border-panel-line text-text-lo hover:border-circuit hover:text-text-hi"
+                  ? "border-growth/60 bg-growth/15 text-growth"
+                  : "border-white/10 text-text-lo hover:border-circuit/50 hover:text-text-hi"
               )}
             >
               Semua
@@ -70,8 +70,8 @@ export function PortfolioCatalog() {
                 className={cn(
                   "rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.1em] transition-colors",
                   activeSlug === category.slug
-                    ? "border-growth bg-growth text-ink"
-                    : "border-panel-line text-text-lo hover:border-circuit hover:text-text-hi"
+                    ? "border-growth/60 bg-growth/15 text-growth"
+                    : "border-white/10 text-text-lo hover:border-circuit/50 hover:text-text-hi"
                 )}
               >
                 {category.name}
@@ -87,7 +87,7 @@ export function PortfolioCatalog() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3"
+                className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
               >
                 {items.map((item, i) => (
                   <PortfolioCard key={item.slug} item={item} delay={(i % 3) * 0.06} />
@@ -100,9 +100,9 @@ export function PortfolioCatalog() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-16 flex flex-col items-center rounded-2xl border border-dashed border-panel-line px-6 py-20 text-center"
+                className="mt-16 flex flex-col items-center rounded-2xl border border-dashed border-white/10 px-6 py-20 text-center"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-circuit-dim/60 bg-circuit/10 text-circuit">
                   <EmptyIcon size={24} />
                 </div>
                 <h3 className="mt-6 font-display text-lg text-text-hi">

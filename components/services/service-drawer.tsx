@@ -59,7 +59,7 @@ export function ServiceDrawer({
           >
             <div className="flex items-start justify-between gap-4 border-b border-white/5 px-6 py-6">
               <div className="flex items-start gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim/60 bg-circuit/10 text-circuit">
                   <Icon size={20} />
                 </div>
                 <div>
@@ -75,14 +75,14 @@ export function ServiceDrawer({
                 type="button"
                 onClick={onClose}
                 aria-label="Tutup"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-text-lo transition-colors hover:bg-panel-line hover:text-text-hi"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-text-lo transition-colors hover:bg-white/5 hover:text-text-hi"
               >
                 <X size={18} />
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 py-2">
-              <div className="divide-y divide-panel-line">
+              <div className="divide-y divide-white/5">
                 {items.map((item) => (
                   <div key={item.name} className="flex flex-col gap-3 py-6">
                     <div>
@@ -100,7 +100,7 @@ export function ServiceDrawer({
                       href={waLinkForService(item, category.name)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex w-fit items-center gap-2 rounded-full border border-circuit-dim px-4 py-2 text-xs font-medium text-text-hi transition-colors hover:border-growth hover:text-growth"
+                      className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-medium text-text-hi transition-colors duration-200 hover:border-growth/60 hover:text-growth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit"
                     >
                       <MessageCircle size={14} />
                       Pesan via WhatsApp

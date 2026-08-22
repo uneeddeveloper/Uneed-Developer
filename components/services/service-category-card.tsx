@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowRight, Blocks } from "lucide-react";
-import type { ServiceCategoryMeta } from "@/lib/content";
-import { handleSpotlightMove, spotlightStyle } from "@/lib/utils";
+import { ArrowUpRight, Blocks } from "lucide-react";
+import { SERVICE_CATALOG, type ServiceCategoryMeta } from "@/lib/content";
 import { SERVICE_ICONS } from "./service-icons";
 
 export function ServiceCategoryCard({
@@ -13,43 +12,37 @@ export function ServiceCategoryCard({
   onOpen: (category: ServiceCategoryMeta) => void;
 }) {
   const Icon = SERVICE_ICONS[category.slug] ?? Blocks;
+  const packageCount = SERVICE_CATALOG.filter(
+    (item) => item.categorySlug === category.slug
+  ).length;
 
   return (
     <button
       type="button"
       onClick={() => onOpen(category)}
-      className="group block w-full text-left"
+      aria-label={`Lihat paket ${category.name}`}
+      className="glass group flex h-full w-full flex-col rounded-2xl p-6 text-left transition-colors duration-200 hover:border-circuit/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
     >
-      <div
-        onMouseMove={handleSpotlightMove}
-        className="glass relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-xl transition-colors duration-300 group-hover:border-circuit/60"
-      >
-        <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={spotlightStyle()}
-        />
-        <Icon
-          size={40}
-          strokeWidth={1.4}
-          className="relative text-circuit transition-transform duration-500 group-hover:scale-110 group-hover:text-growth"
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-circuit-dim/60 bg-circuit/10 text-circuit transition-colors duration-200 group-hover:text-growth">
+          <Icon size={20} strokeWidth={1.6} />
+        </div>
+        <ArrowUpRight
+          size={16}
+          className="mt-1 shrink-0 text-text-lo transition-colors duration-200 group-hover:text-growth"
         />
       </div>
 
-      <div className="mt-4 flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <h3 className="font-display text-base font-medium text-text-hi">
-            {category.name}
-          </h3>
-          <p className="mt-1 line-clamp-1 text-sm leading-relaxed text-text-lo">
-            {category.description}
-          </p>
-        </div>
-        <ArrowRight
-          size={16}
-          className="mt-1 shrink-0 text-text-lo transition-all duration-300 group-hover:translate-x-1 group-hover:text-growth"
-        />
-      </div>
+      <h3 className="mt-5 font-display text-base font-medium text-text-hi">
+        {category.name}
+      </h3>
+      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-text-lo">
+        {category.description}
+      </p>
+
+      <span className="mt-auto border-t border-white/5 pt-4 font-mono text-[11px] uppercase tracking-[0.1em] text-text-lo">
+        {packageCount} paket tersedia
+      </span>
     </button>
   );
 }

@@ -58,20 +58,20 @@
   border: 1px solid transparent;
   border-radius: inherit;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--color-panel) 42%, transparent), color-mix(in srgb, var(--color-panel) 42%, transparent)),
-    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 55%, transparent), color-mix(in srgb, var(--color-growth) 45%, transparent) 60%, transparent 100%);
+    linear-gradient(color-mix(in srgb, var(--color-panel) 82%, transparent), color-mix(in srgb, var(--color-panel) 82%, transparent)),
+    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 24%, transparent), color-mix(in srgb, var(--color-growth) 18%, transparent) 55%, color-mix(in srgb, var(--color-text-hi) 6%, transparent) 100%);
   background-origin: border-box;
   background-clip: padding-box, border-box;
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  box-shadow: 0 8px 40px -12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px -16px rgba(0, 0, 0, 0.6);
 }
 
-/* Stronger tint for major floating panels (drawer, hero visual, nav). */
+/* Denser fill for panels that sit over content and must stay readable. */
 .glass-heavy {
   background-image:
-    linear-gradient(color-mix(in srgb, var(--color-panel) 72%, transparent), color-mix(in srgb, var(--color-panel) 72%, transparent)),
-    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 55%, transparent), color-mix(in srgb, var(--color-growth) 45%, transparent) 60%, transparent 100%);
+    linear-gradient(color-mix(in srgb, var(--color-panel) 94%, transparent), color-mix(in srgb, var(--color-panel) 94%, transparent)),
+    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 24%, transparent), color-mix(in srgb, var(--color-growth) 18%, transparent) 55%, color-mix(in srgb, var(--color-text-hi) 6%, transparent) 100%);
 }
 
 @keyframes pulse-node {
@@ -83,11 +83,6 @@
     opacity: 1;
     transform: translateX(-50%) scale(1.2);
   }
-}
-
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(4%, -6%) scale(1.08); }
 }
 
 @keyframes flow {

@@ -59,7 +59,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="kontak" className="relative scroll-mt-24 py-32 sm:py-40">
+    <section id="kontak" className="relative scroll-mt-24 py-24 sm:py-32">
       <AmbientGlow />
       <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
@@ -94,9 +94,9 @@ export function ContactSection() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass group flex items-center gap-4 rounded-2xl p-4 transition-colors hover:border-circuit/60"
+                className="glass group flex items-center gap-4 rounded-2xl p-4 transition-colors duration-200 hover:border-circuit/50"
               >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim/60 bg-circuit/10 text-circuit">
                   <Icon width={18} height={18} />
                 </div>
                 <div className="min-w-0">
@@ -111,7 +111,7 @@ export function ContactSection() {
             ))}
 
             <div className="glass flex items-start gap-4 rounded-2xl p-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim bg-circuit/10 text-circuit">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-circuit-dim/60 bg-circuit/10 text-circuit">
                 <MapPin size={18} />
               </div>
               <div className="min-w-0">
@@ -149,7 +149,7 @@ export function ContactSection() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Nama Anda"
-                      className="rounded-lg border border-panel-line bg-ink px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none transition-colors focus:border-circuit"
+                      className="rounded-lg border border-white/10 bg-ink/60 px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none transition-colors focus:border-circuit/70"
                     />
                   </label>
                   <label className="flex flex-col gap-1.5 text-xs text-text-lo">
@@ -160,7 +160,7 @@ export function ContactSection() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="email@anda.com"
-                      className="rounded-lg border border-panel-line bg-ink px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none transition-colors focus:border-circuit"
+                      className="rounded-lg border border-white/10 bg-ink/60 px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none transition-colors focus:border-circuit/70"
                     />
                   </label>
                 </div>
@@ -170,7 +170,7 @@ export function ContactSection() {
                   <select
                     value={service}
                     onChange={(e) => setService(e.target.value)}
-                    className="rounded-lg border border-panel-line bg-ink px-3 py-2.5 text-sm text-text-hi outline-none transition-colors focus:border-circuit"
+                    className="rounded-lg border border-white/10 bg-ink/60 px-3 py-2.5 text-sm text-text-hi outline-none transition-colors focus:border-circuit/70"
                   >
                     {SERVICE_OPTIONS.map((option) => (
                       <option key={option} value={option}>
@@ -188,7 +188,7 @@ export function ContactSection() {
                     value={detail}
                     onChange={(e) => setDetail(e.target.value)}
                     placeholder="Ceritakan sedikit tentang project yang ingin Anda buat..."
-                    className="resize-none rounded-lg border border-panel-line bg-ink px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none transition-colors focus:border-circuit"
+                    className="resize-none rounded-lg border border-white/10 bg-ink/60 px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none transition-colors focus:border-circuit/70"
                   />
                 </label>
 

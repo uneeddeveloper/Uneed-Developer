@@ -1,31 +1,39 @@
+/**
+ * Circuit-flow diagram echoing the brand mark: blue "process" nodes on the
+ * left resolving into green "growth" nodes on the right, with the active
+ * path animated. Purely decorative.
+ */
 const NODES = [
-  { id: "a", x: 60, y: 80, r: 6, color: "circuit" },
-  { id: "b", x: 180, y: 50, r: 5, color: "circuit" },
-  { id: "c", x: 300, y: 100, r: 7, color: "circuit" },
-  { id: "d", x: 110, y: 200, r: 8, color: "circuit" },
-  { id: "e", x: 260, y: 230, r: 6, color: "growth" },
-  { id: "f", x: 340, y: 300, r: 9, color: "growth" },
-  { id: "g", x: 150, y: 320, r: 5, color: "growth" },
-];
+  { id: "a", x: 70, y: 110, r: 5, tone: "circuit" },
+  { id: "b", x: 70, y: 250, r: 5, tone: "circuit" },
+  { id: "c", x: 165, y: 60, r: 4, tone: "circuit" },
+  { id: "d", x: 165, y: 180, r: 7, tone: "circuit" },
+  { id: "e", x: 165, y: 300, r: 4, tone: "circuit" },
+  { id: "f", x: 265, y: 120, r: 5, tone: "growth" },
+  { id: "g", x: 265, y: 245, r: 5, tone: "growth" },
+  { id: "h", x: 345, y: 180, r: 9, tone: "growth" },
+] as const;
 
-const EDGES: [string, string, boolean?][] = [
-  ["a", "b"],
-  ["b", "c"],
-  ["a", "d"],
-  ["b", "d"],
-  ["c", "e", true],
-  ["d", "e"],
-  ["d", "g"],
-  ["e", "f", true],
-  ["g", "f"],
-];
+/** [from, to, isActivePath] — active edges get the animated dashed flow. */
+const EDGES: readonly (readonly [string, string, boolean?])[] = [
+  ["a", "c"],
+  ["a", "d", true],
+  ["b", "d", true],
+  ["b", "e"],
+  ["c", "f"],
+  ["d", "f", true],
+  ["d", "g", true],
+  ["e", "g"],
+  ["f", "h", true],
+  ["g", "h", true],
+] as const;
 
 const byId = Object.fromEntries(NODES.map((n) => [n.id, n]));
 
 export function NetworkGraphic() {
   return (
-    <svg viewBox="0 0 400 380" className="h-full w-full" aria-hidden="true">
-      {EDGES.map(([from, to, animated], i) => {
+    <svg viewBox="0 0 400 360" className="h-full w-full" aria-hidden="true">
+      {EDGES.map(([from, to, active], i) => {
         const a = byId[from];
         const b = byId[to];
         return (
@@ -35,35 +43,35 @@ export function NetworkGraphic() {
             y1={a.y}
             x2={b.x}
             y2={b.y}
-            stroke={animated ? "var(--color-growth)" : "var(--color-panel-line)"}
-            strokeWidth={animated ? 1.5 : 1}
-            strokeDasharray={animated ? "4 6" : undefined}
+            stroke={active ? "var(--color-growth)" : "var(--color-circuit)"}
+            strokeOpacity={active ? 0.55 : 0.22}
+            strokeWidth={active ? 1.4 : 1}
+            strokeDasharray={active ? "3 7" : undefined}
             style={
-              animated
-                ? { animation: `flow 1.4s linear infinite`, animationDelay: `${i * 0.15}s` }
+              active
+                ? { animation: "flow 1.6s linear infinite", animationDelay: `${i * 0.12}s` }
                 : undefined
             }
-            opacity={animated ? 0.8 : 0.5}
           />
         );
       })}
-      {NODES.map((n) => (
-        <circle
-          key={n.id}
-          cx={n.x}
-          cy={n.y}
-          r={n.r}
-          fill={n.color === "growth" ? "var(--color-growth)" : "var(--color-circuit)"}
-          opacity={0.9}
-        >
-          <animate
-            attributeName="opacity"
-            values="0.6;1;0.6"
-            dur={`${2.4 + n.r * 0.2}s`}
-            repeatCount="indefinite"
-          />
-        </circle>
-      ))}
+
+      {NODES.map((n) => {
+        const color = n.tone === "growth" ? "var(--color-growth)" : "var(--color-circuit)";
+        return (
+          <g key={n.id}>
+            <circle cx={n.x} cy={n.y} r={n.r * 2.6} fill={color} opacity={0.12} />
+            <circle cx={n.x} cy={n.y} r={n.r} fill={color}>
+              <animate
+                attributeName="opacity"
+                values="0.65;1;0.65"
+                dur={`${2.6 + n.r * 0.18}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        );
+      })}
     </svg>
   );
 }

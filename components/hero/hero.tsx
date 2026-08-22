@@ -9,7 +9,6 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { SignalTrace } from "@/components/ui/signal-trace";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { CONTACT } from "@/lib/content";
-import { handleSpotlightMove, spotlightStyle } from "@/lib/utils";
 import { NetworkGraphic } from "./network-graphic";
 
 const TRUST_BADGES = [
@@ -26,17 +25,9 @@ const fadeUp = (delay = 0) => ({
 
 export function Hero() {
   return (
-    <section
-      onMouseMove={handleSpotlightMove}
-      className="relative overflow-hidden pt-16 pb-32 sm:pt-20 sm:pb-40"
-    >
+    <section className="relative overflow-hidden pt-16 pb-24 sm:pt-20 sm:pb-32">
       <AmbientGlow />
-      <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
-      <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-500"
-        style={spotlightStyle("59, 158, 255", 640, 0.06)}
-        aria-hidden="true"
-      />
+      <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
       <Container className="relative flex gap-8">
         <SignalTrace className="hidden self-stretch lg:block" />
 
