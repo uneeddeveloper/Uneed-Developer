@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Blocks, Check, MessageCircle, X } from "lucide-react";
 import { SERVICE_CATALOG, waLinkForService, type ServiceCategoryMeta } from "@/lib/content";
@@ -13,6 +14,12 @@ export function ServiceDrawer({
   category: ServiceCategoryMeta | null;
   onClose: () => void;
 }) {
+  // Rendered through a portal on <body>: the page-transition wrapper animates
+  // a transform, and any transformed ancestor becomes the containing block for
+  // position:fixed children — which would drag this drawer along with it.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     if (!category) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -31,7 +38,9 @@ export function ServiceDrawer({
     ? SERVICE_CATALOG.filter((item) => item.categorySlug === category.slug)
     : [];
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {category && (
         <>
@@ -135,6 +144,7 @@ export function ServiceDrawer({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
