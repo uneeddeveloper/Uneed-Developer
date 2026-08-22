@@ -48,30 +48,52 @@
 }
 
 /*
-  Frosted glass surface with a circuit->growth gradient edge — needs a
-  colored ambient blob behind it (see AmbientGlow) to actually read as glass.
-  Two background layers: solid tinted fill clipped to padding-box, gradient
-  clipped to border-box, so the "border" is a soft brand-colored gradient
-  instead of a flat line.
+  Liquid-glass surface. Three stacked background layers:
+    1. specular sheen — a soft diagonal light sweep, as if a highlight is
+       catching the top-left of the pane
+    2. tinted fill — keeps text legible over whatever sits behind
+    3. gradient edge — clipped to border-box so the 1px border reads as a
+       brand-colored refraction rather than a flat line
+  The inset shadows do the rest of the "liquid" work: a bright lip along the
+  top edge and a darker one along the bottom, which is what sells thickness.
+  Needs a colored ambient blob behind it (see AmbientGlow) to refract.
+
+  NOTE: deliberately does NOT set border-radius or position — callers own
+  those. An earlier `border-radius: inherit` here silently flattened every
+  rounded-* utility, since unlayered CSS outranks Tailwind's utility layer.
 */
 .glass {
   border: 1px solid transparent;
-  border-radius: inherit;
   background-image:
-    linear-gradient(color-mix(in srgb, var(--color-panel) 82%, transparent), color-mix(in srgb, var(--color-panel) 82%, transparent)),
-    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 24%, transparent), color-mix(in srgb, var(--color-growth) 18%, transparent) 55%, color-mix(in srgb, var(--color-text-hi) 6%, transparent) 100%);
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-text-hi) 11%, transparent) 0%,
+      color-mix(in srgb, var(--color-text-hi) 3%, transparent) 26%,
+      transparent 52%
+    ),
+    linear-gradient(color-mix(in srgb, var(--color-panel) 80%, transparent), color-mix(in srgb, var(--color-panel) 80%, transparent)),
+    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 30%, transparent), color-mix(in srgb, var(--color-growth) 22%, transparent) 55%, color-mix(in srgb, var(--color-text-hi) 7%, transparent) 100%);
   background-origin: border-box;
-  background-clip: padding-box, border-box;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px -16px rgba(0, 0, 0, 0.6);
+  background-clip: padding-box, padding-box, border-box;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--color-text-hi) 14%, transparent),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.28),
+    0 10px 36px -18px rgba(0, 0, 0, 0.7);
 }
 
 /* Denser fill for panels that sit over content and must stay readable. */
 .glass-heavy {
   background-image:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-text-hi) 9%, transparent) 0%,
+      color-mix(in srgb, var(--color-text-hi) 2%, transparent) 26%,
+      transparent 52%
+    ),
     linear-gradient(color-mix(in srgb, var(--color-panel) 94%, transparent), color-mix(in srgb, var(--color-panel) 94%, transparent)),
-    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 24%, transparent), color-mix(in srgb, var(--color-growth) 18%, transparent) 55%, color-mix(in srgb, var(--color-text-hi) 6%, transparent) 100%);
+    linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 30%, transparent), color-mix(in srgb, var(--color-growth) 22%, transparent) 55%, color-mix(in srgb, var(--color-text-hi) 7%, transparent) 100%);
 }
 
 @keyframes pulse-node {

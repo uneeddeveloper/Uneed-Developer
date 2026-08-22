@@ -23,33 +23,31 @@ export function PortfolioCard({
     >
       <Link
         href={`/portfolio/${item.slug}`}
-        className="glass group flex h-full flex-col overflow-hidden rounded-2xl transition-colors duration-200 hover:border-circuit/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+        className="group relative block aspect-[16/10] w-full overflow-hidden rounded-2xl bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
       >
-        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-ink">
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        </div>
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+        />
 
-        <div className="flex flex-1 items-start justify-between gap-4 p-5">
+        {/* keeps the caption legible over bright screenshots */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
+
+        <div className="glass absolute inset-x-2.5 bottom-2.5 flex items-center justify-between gap-3 rounded-xl px-4 py-3">
           <div className="min-w-0">
             <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-circuit">
               {item.type}
             </span>
-            <h3 className="mt-1.5 font-display text-base font-medium text-text-hi">
+            <h3 className="mt-0.5 truncate font-display text-sm font-medium text-text-hi">
               {item.title}
             </h3>
-            <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-text-lo">
-              {item.description}
-            </p>
           </div>
           <ArrowUpRight
             size={16}
-            className="mt-1 shrink-0 text-text-lo transition-colors duration-200 group-hover:text-growth"
+            className="shrink-0 text-text-lo transition-colors duration-200 group-hover:text-growth"
           />
         </div>
       </Link>
