@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
+
+model TeamMember {
+  id        String             @id @default(cuid())
+  name      String
+  role      String             @default("Developer")
+  createdAt DateTime           @default(now())
+  splits    TransactionSplit[]
+}
+
+model Client {
+  id       String    @id @default(cuid())
+  name     String
+  projects Project[]
+}
+
+model Project {
+  id           String        @id @default(cuid())
+  name         String
+  category     String
+  status       String        @default("in_progress") // "completed" | "in_progress"
+  value        Int
+  clientId     String?
+  client       Client?       @relation(fields: [clientId], references: [id])
+  deadline     DateTime?
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+}
+
+model Transaction {
+  id          String              @id @default(cuid())
+  type        String              // "income" | "expense"
+  description String
+  amount      Int
+  date        DateTime
+  projectId   String?
+  project     Project?            @relation(fields: [projectId], references: [id])
+  splits      TransactionSplit[]
+  createdAt   DateTime            @default(now())
+}
+
+model TransactionSplit {
+  id            String      @id @default(cuid())
+  transactionId String
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  memberId      String
+  member        TeamMember  @relation(fields: [memberId], references: [id])
+  amount        Int
+}
+
+/// The 7 top-level service categories. Portfolio items reference this
+/// directly via categoryId — editing a category here updates both the
+/// Layanan catalog and the Portfolio filter pills on the public site.
+model ServiceCategory {
+  id             String          @id @default(cuid())
+  slug           String          @unique
+  name           String
+  description    String
+  order          Int             @default(0)
+  services       Service[]
+  portfolioItems PortfolioItem[]
+}
+
+/// An orderable package within a category (e.g. "Company Profile" under
+/// Web Application) — what a visitor picks in the /layanan drawer.
+model Service {
+  id          String          @id @default(cuid())
+  categoryId  String
+  category    ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name        String
+  description String
+  priceRange  String?
+  order       Int             @default(0)
+}
+
+model PortfolioItem {
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  title       String
+  type        String
+  categoryId  String
+  category    ServiceCategory @relation(fields: [categoryId], references: [id])
+  description String
+  detail      String
+  link        String?
+  image       String
+  order       Int             @default(0)
+  createdAt   DateTime        @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}

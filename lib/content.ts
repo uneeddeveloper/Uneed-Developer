@@ -306,7 +306,8 @@ export function waLink(message: string) {
   return `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
-export function waLinkForService(item: ServiceCatalogItem, categoryName: string) {
+/** Accepts any {name} — a static SERVICE_CATALOG row or a live Prisma Service row alike. */
+export function waLinkForService(item: { name: string }, categoryName: string) {
   return waLink(
     `Halo Uneed Developer, saya tertarik dengan layanan "${item.name}" (${categoryName}). Boleh info lebih lanjut?`
   );

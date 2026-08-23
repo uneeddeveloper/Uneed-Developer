@@ -7,15 +7,16 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { Marquee } from "@/components/ui/marquee";
-import { PORTFOLIO } from "@/lib/content";
+import type { PortfolioItemWithCategory } from "@/lib/public-data";
 import { PortfolioCard } from "./portfolio-card";
 
-// Split into two rows that travel opposite ways — the counter-motion reads as
-// a showcase rather than a list, and shows more work per screen.
-const ROW_ONE = PORTFOLIO.slice(0, Math.ceil(PORTFOLIO.length / 2));
-const ROW_TWO = PORTFOLIO.slice(Math.ceil(PORTFOLIO.length / 2));
+export function PortfolioSection({ items }: { items: PortfolioItemWithCategory[] }) {
+  // Split into two rows that travel opposite ways — the counter-motion reads
+  // as a showcase rather than a list, and shows more work per screen.
+  const mid = Math.ceil(items.length / 2);
+  const rowOne = items.slice(0, mid);
+  const rowTwo = items.slice(mid);
 
-export function PortfolioSection() {
   return (
     <section id="portfolio" className="relative scroll-mt-24 py-24 sm:py-32">
       <AmbientGlow variant="bottom" className="opacity-60" />
@@ -24,7 +25,7 @@ export function PortfolioSection() {
         <SectionHeading
           label="Portfolio"
           title="Karya Terbaik Kami"
-          description="Sembilan project yang sudah rilis dan dipakai klien — dari company profile sampai sistem ujian daring."
+          description={`${items.length} project yang sudah rilis dan dipakai klien — dari company profile sampai sistem ujian daring.`}
           action={
             <Link
               href="/portfolio"
@@ -48,7 +49,7 @@ export function PortfolioSection() {
         className="mt-14 flex flex-col gap-5"
       >
         <Marquee direction="left" speed={70}>
-          {ROW_ONE.map((item) => (
+          {rowOne.map((item) => (
             <PortfolioCard
               key={item.slug}
               item={item}
@@ -58,16 +59,18 @@ export function PortfolioSection() {
           ))}
         </Marquee>
 
-        <Marquee direction="right" speed={85}>
-          {ROW_TWO.map((item) => (
-            <PortfolioCard
-              key={item.slug}
-              item={item}
-              className="aspect-[16/10] w-[19rem] sm:w-[23rem]"
-              sizes="368px"
-            />
-          ))}
-        </Marquee>
+        {rowTwo.length > 0 && (
+          <Marquee direction="right" speed={85}>
+            {rowTwo.map((item) => (
+              <PortfolioCard
+                key={item.slug}
+                item={item}
+                className="aspect-[16/10] w-[19rem] sm:w-[23rem]"
+                sizes="368px"
+              />
+            ))}
+          </Marquee>
+        )}
       </motion.div>
     </section>
   );

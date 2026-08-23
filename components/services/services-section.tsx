@@ -8,12 +8,12 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { ScrollRow } from "@/components/ui/scroll-row";
-import { SERVICE_CATEGORIES, type ServiceCategoryMeta } from "@/lib/content";
+import type { ServiceCategoryWithServices } from "@/lib/public-data";
 import { ServiceCategoryCard } from "./service-category-card";
 import { ServiceDrawer } from "./service-drawer";
 
-export function ServicesSection() {
-  const [active, setActive] = useState<ServiceCategoryMeta | null>(null);
+export function ServicesSection({ categories }: { categories: ServiceCategoryWithServices[] }) {
+  const [active, setActive] = useState<ServiceCategoryWithServices | null>(null);
 
   return (
     <section id="layanan" className="relative scroll-mt-24 py-24 sm:py-32">
@@ -44,8 +44,8 @@ export function ServicesSection() {
           className="mt-14"
         >
           <ScrollRow label="daftar layanan">
-            {SERVICE_CATEGORIES.map((category) => (
-              <div key={category.slug} className="w-72 shrink-0 snap-start sm:w-80">
+            {categories.map((category) => (
+              <div key={category.id} className="w-72 shrink-0 snap-start sm:w-80">
                 <ServiceCategoryCard category={category} onOpen={setActive} />
               </div>
             ))}

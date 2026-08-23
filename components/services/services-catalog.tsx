@@ -7,18 +7,18 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
-import { SERVICE_CATEGORIES, type ServiceCategoryMeta } from "@/lib/content";
+import type { ServiceCategoryWithServices } from "@/lib/public-data";
 import { ServiceCategoryCard } from "./service-category-card";
 import { ServiceDrawer } from "./service-drawer";
 
-export function ServicesCatalog() {
-  const [active, setActive] = useState<ServiceCategoryMeta | null>(null);
+export function ServicesCatalog({ categories }: { categories: ServiceCategoryWithServices[] }) {
+  const [active, setActive] = useState<ServiceCategoryWithServices | null>(null);
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const slug = searchParams.get("kategori");
     if (!slug) return;
-    const category = SERVICE_CATEGORIES.find((c) => c.slug === slug);
+    const category = categories.find((c) => c.slug === slug);
     if (category) setActive(category);
     // Only run once on mount — the drawer's own state owns things after that.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,9 +54,9 @@ export function ServicesCatalog() {
           </motion.div>
 
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICE_CATEGORIES.map((category, i) => (
+            {categories.map((category, i) => (
               <motion.div
-                key={category.slug}
+                key={category.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}

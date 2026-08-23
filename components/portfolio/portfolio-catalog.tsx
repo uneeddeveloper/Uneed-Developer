@@ -9,11 +9,13 @@ import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { cn } from "@/lib/utils";
-import { PORTFOLIO, SERVICE_CATEGORIES } from "@/lib/content";
+import type { PortfolioItemWithCategory } from "@/lib/public-data";
 import { SERVICE_ICONS } from "@/components/services/service-icons";
 import { PortfolioCard } from "./portfolio-card";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+type CategoryOption = { id: string; slug: string; name: string };
 
 /**
  * Bento rhythm: every 4th tile (0, 4, 8 …) becomes a 2×2 feature so the grid
@@ -28,16 +30,20 @@ function spanFor(index: number, total: number) {
   return total >= 3 && index % 4 === 0 ? "sm:col-span-2 sm:row-span-2" : "";
 }
 
-export function PortfolioCatalog() {
+export function PortfolioCatalog({
+  items,
+  categories,
+}: {
+  items: PortfolioItemWithCategory[];
+  categories: CategoryOption[];
+}) {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
 
-  const activeCategory = activeSlug
-    ? SERVICE_CATEGORIES.find((c) => c.slug === activeSlug)
-    : null;
+  const activeCategory = activeSlug ? categories.find((c) => c.slug === activeSlug) : null;
 
-  const items = activeSlug
-    ? PORTFOLIO.filter((item) => item.categorySlug === activeSlug)
-    : PORTFOLIO;
+  const filtered = activeSlug
+    ? items.filter((item) => item.category.slug === activeSlug)
+    : items;
 
   const EmptyIcon = activeCategory ? (SERVICE_ICONS[activeCategory.slug] ?? Blocks) : Blocks;
 
@@ -53,11 +59,11 @@ export function PortfolioCatalog() {
         />
 
         <div className="mt-12 flex flex-wrap justify-center gap-2.5">
-          {[{ slug: null, name: "Semua" }, ...SERVICE_CATEGORIES].map((category) => {
+          {[{ id: "all", slug: null, name: "Semua" }, ...categories].map((category) => {
             const active = activeSlug === category.slug;
             return (
               <button
-                key={category.slug ?? "all"}
+                key={category.id}
                 type="button"
                 onClick={() => setActiveSlug(category.slug)}
                 className={cn(
@@ -82,7 +88,7 @@ export function PortfolioCatalog() {
           })}
         </div>
 
-        {items.length > 0 ? (
+        {filtered.length > 0 ? (
           <motion.div
             layout
             transition={{ duration: 0.5, ease: EASE }}
@@ -90,7 +96,7 @@ export function PortfolioCatalog() {
             className="mt-12 grid auto-rows-[200px] grid-flow-row-dense grid-cols-1 gap-5 sm:grid-cols-2 lg:auto-rows-[220px] lg:grid-cols-3"
           >
             <AnimatePresence mode="popLayout">
-              {items.map((item, i) => (
+              {filtered.map((item, i) => (
                 <motion.div
                   key={item.slug}
                   layout
@@ -102,13 +108,13 @@ export function PortfolioCatalog() {
                     delay: Math.min(i, 6) * 0.045,
                     ease: EASE,
                   }}
-                  className={spanFor(i, items.length)}
+                  className={spanFor(i, filtered.length)}
                 >
                   <PortfolioCard
                     item={item}
                     priority={i < 3}
                     sizes={
-                      i % 4 === 0 && items.length >= 3
+                      i % 4 === 0 && filtered.length >= 3
                         ? "(min-width: 640px) 66vw, 100vw"
                         : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     }

@@ -5,3 +5,9 @@ out
 .env*.local
 *.log
 .DS_Store
+tsconfig.tsbuildinfo
+
+# Prisma
+/lib/generated/prisma
+/dev.db
+/dev.db-journal

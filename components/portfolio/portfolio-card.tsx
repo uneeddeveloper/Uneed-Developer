@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { serviceCategoryName, type PortfolioItem } from "@/lib/content";
+import type { PortfolioItemWithCategory } from "@/lib/public-data";
 import { cn } from "@/lib/utils";
 
 /**
@@ -18,7 +18,7 @@ export function PortfolioCard({
   priority = false,
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
 }: {
-  item: PortfolioItem;
+  item: PortfolioItemWithCategory;
   className?: string;
   priority?: boolean;
   sizes?: string;
@@ -45,7 +45,7 @@ export function PortfolioCard({
 
       {/* Category chip — always visible, small enough to keep the shot readable. */}
       <span className="glass absolute left-3 top-3 z-10 rounded-full px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.15em] text-circuit">
-        {serviceCategoryName(item.categorySlug)}
+        {item.category.name}
       </span>
 
       <div

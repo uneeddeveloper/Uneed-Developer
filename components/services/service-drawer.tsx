@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Blocks, Check, MessageCircle, X } from "lucide-react";
-import { SERVICE_CATALOG, waLinkForService, type ServiceCategoryMeta } from "@/lib/content";
+import { waLinkForService } from "@/lib/content";
+import type { ServiceCategoryWithServices } from "@/lib/public-data";
 import { SERVICE_ICONS } from "./service-icons";
 
 export function ServiceDrawer({
   category,
   onClose,
 }: {
-  category: ServiceCategoryMeta | null;
+  category: ServiceCategoryWithServices | null;
   onClose: () => void;
 }) {
   // Rendered through a portal on <body>: the page-transition wrapper animates
@@ -34,9 +35,7 @@ export function ServiceDrawer({
   }, [category, onClose]);
 
   const Icon = category ? (SERVICE_ICONS[category.slug] ?? Blocks) : Blocks;
-  const items = category
-    ? SERVICE_CATALOG.filter((item) => item.categorySlug === category.slug)
-    : [];
+  const items = category?.services ?? [];
 
   if (!mounted) return null;
 
@@ -107,7 +106,7 @@ export function ServiceDrawer({
             <div className="flex-1 space-y-3 overflow-y-auto px-6 pb-6">
               {items.map((item, i) => (
                 <article
-                  key={item.name}
+                  key={item.id}
                   className="rounded-2xl border border-white/10 bg-ink/40 p-5 transition-colors duration-200 hover:border-circuit/40"
                 >
                   <div className="flex items-baseline gap-3">
