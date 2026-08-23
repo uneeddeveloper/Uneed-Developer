@@ -15,7 +15,7 @@ export default async function AdminDashboardLayout({
 
   return (
     <div className="relative min-h-screen">
-      <AmbientGlow className="opacity-40" />
+      <AmbientGlow className="opacity-60" />
       <div className="relative mx-auto flex max-w-[100rem] flex-col gap-4 p-4 lg:flex-row lg:gap-6">
         <AdminShell adminName={session.user.name ?? session.user.email ?? "Admin"} />
         <main className="min-w-0 flex-1 py-2">{children}</main>

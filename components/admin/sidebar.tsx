@@ -63,15 +63,21 @@ export function Sidebar({
               href={item.href}
               onClick={onNavigate}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors duration-200",
+                "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit",
                 active
-                  ? "bg-white/8 text-text-hi"
+                  ? "bg-gradient-to-r from-circuit/20 via-growth/10 to-transparent text-text-hi shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
                   : "text-text-lo hover:bg-white/5 hover:text-text-hi"
               )}
               aria-current={active ? "page" : undefined}
             >
-              <Icon size={17} className={active ? "text-growth" : undefined} />
+              {active && (
+                <span className="absolute inset-y-1 left-0 w-[3px] rounded-full bg-gradient-to-b from-circuit to-growth" />
+              )}
+              <Icon
+                size={17}
+                className={active ? "text-growth drop-shadow-[0_0_6px_var(--color-growth)]" : undefined}
+              />
               {item.label}
             </Link>
           );
@@ -80,7 +86,7 @@ export function Sidebar({
 
       <div className="border-t border-white/5 pt-3">
         <div className="flex items-center gap-3 rounded-xl px-3 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-circuit-dim/60 bg-circuit/10 font-mono text-xs text-circuit">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-circuit to-growth font-mono text-xs font-bold text-ink">
             {adminName.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">

@@ -39,8 +39,8 @@ export default function AdminLoginPage() {
       <AmbientGlow variant="center" />
       <Container className="relative flex justify-center">
         <div className="glass w-full max-w-sm rounded-2xl p-8">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-circuit-dim/60 bg-circuit/10 text-circuit">
-            <Lock size={18} />
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-circuit to-circuit-dim text-ink shadow-[0_6px_20px_-6px_var(--color-circuit)]">
+            <Lock size={18} strokeWidth={2} />
           </div>
           <h1 className="mt-5 font-display text-xl font-bold text-text-hi">
             Uneed Admin

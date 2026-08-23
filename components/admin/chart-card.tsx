@@ -17,7 +17,8 @@ export function ChartCard({
     <div className={cn("glass rounded-2xl p-5", className)}>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className="font-display text-base font-bold text-text-hi">
+          <h3 className="flex items-center gap-2 font-display text-base font-bold text-text-hi">
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-circuit to-growth shadow-[0_0_8px_var(--color-circuit)]" />
             {title}
           </h3>
           {subtitle && <p className="mt-0.5 text-xs text-text-lo">{subtitle}</p>}

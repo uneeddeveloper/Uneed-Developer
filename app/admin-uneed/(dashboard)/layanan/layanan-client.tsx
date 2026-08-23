@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Plus, Pencil, ChevronDown } from "lucide-react";
+import { Plus, Pencil, ChevronDown, Layers } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/admin/modal";
 import { Field, TextInput, TextArea } from "@/components/admin/form-field";
 import { DeleteButton } from "@/components/admin/delete-button";
+import { CHART_SERIES } from "@/components/admin/chart-theme";
 import {
   createServiceCategory,
   updateServiceCategory,
@@ -72,8 +73,9 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
       </div>
 
       <div className="mt-4 flex flex-col gap-3">
-        {categories.map((cat) => {
+        {categories.map((cat, i) => {
           const open = openId === cat.id;
+          const color = CHART_SERIES[i % CHART_SERIES.length];
           return (
             <div key={cat.id} className="glass overflow-hidden rounded-2xl">
               <div className="flex items-start justify-between gap-4 p-5">
@@ -82,9 +84,15 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
                   onClick={() => setOpenId(open ? null : cat.id)}
                   className="flex flex-1 items-start gap-3 text-left focus-visible:outline-none"
                 >
+                  <div
+                    className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-ink"
+                    style={{ background: color, boxShadow: `0 4px 16px -4px ${color}` }}
+                  >
+                    <Layers size={15} strokeWidth={2} />
+                  </div>
                   <ChevronDown
                     size={16}
-                    className={`mt-1 shrink-0 text-text-lo transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+                    className={`mt-2.5 shrink-0 text-text-lo transition-transform duration-200 ${open ? "rotate-180" : ""}`}
                   />
                   <div>
                     <h3 className="font-display text-base font-bold text-text-hi">
