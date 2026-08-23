@@ -106,6 +106,16 @@ model PortfolioItem {
   createdAt   DateTime        @default(now())
 }
 
+/// Singleton row (id is always 1) holding the shared "master key" that
+/// gates admin data after login — adapted from the old JSONBin admin,
+/// where no data showed until a Master Key + Bin ID were configured.
+/// Here it's a second secret an admin must enter once per device.
+model AppSecurity {
+  id            Int      @id @default(1)
+  masterKeyHash String?
+  updatedAt     DateTime @updatedAt
+}
+
 model ContactMessage {
   id        String   @id @default(cuid())
   name      String
