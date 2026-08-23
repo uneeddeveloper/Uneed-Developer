@@ -2,72 +2,86 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import type { PortfolioItem } from "@/lib/content";
+import { serviceCategoryName, type PortfolioItem } from "@/lib/content";
+import { cn } from "@/lib/utils";
 
 /**
- * On hover-capable pointers the caption stays out of the way until you hover,
- * so the screenshot reads at full size. Touch devices have no hover, so there
- * the caption is always visible — hence the `(hover: hover)` guards rather
- * than a plain `group-hover`.
+ * Reveal is gated on `(hover: hover)` rather than plain group-hover: touch
+ * devices never hover, so there the caption has to stay visible.
  */
-const REVEAL = "[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100";
+const ON_HOVER = "[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100";
 
 export function PortfolioCard({
   item,
-  delay = 0,
+  className,
+  priority = false,
+  sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
 }: {
   item: PortfolioItem;
-  delay?: number;
+  className?: string;
+  priority?: boolean;
+  sizes?: string;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
-      className="h-full"
+    <Link
+      href={`/portfolio/${item.slug}`}
+      className={cn(
+        "group relative block h-full w-full overflow-hidden rounded-2xl border border-white/10 bg-ink",
+        "transition-[border-color,transform,box-shadow] duration-500 ease-out",
+        "hover:-translate-y-1 hover:border-circuit/50 hover:shadow-[0_20px_50px_-24px_rgba(0,0,0,0.9)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-ink",
+        className
+      )}
     >
-      <Link
-        href={`/portfolio/${item.slug}`}
-        className="group relative block aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink transition-colors duration-300 hover:border-circuit/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-circuit focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+      <Image
+        src={item.image}
+        alt={item.title}
+        fill
+        priority={priority}
+        sizes={sizes}
+        className="object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+      />
+
+      {/* Category chip — always visible, small enough to keep the shot readable. */}
+      <span className="glass absolute left-3 top-3 z-10 rounded-full px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.15em] text-circuit">
+        {serviceCategoryName(item.categorySlug)}
+      </span>
+
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-transparent transition-opacity duration-500",
+          ON_HOVER
+        )}
+      />
+
+      {/* A hairline that draws itself across the card on hover. */}
+      <span
+        className="pointer-events-none absolute inset-x-5 bottom-[4.75rem] z-10 h-px origin-left scale-x-0 bg-gradient-to-r from-circuit via-growth to-transparent transition-transform duration-700 ease-out group-hover:scale-x-100"
+        aria-hidden="true"
+      />
+
+      <div
+        className={cn(
+          "absolute inset-x-0 bottom-0 z-10 p-5 transition-all duration-500 ease-out",
+          "[@media(hover:hover)]:translate-y-3 [@media(hover:hover)]:group-hover:translate-y-0",
+          ON_HOVER
+        )}
       >
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover object-top transition-transform duration-[600ms] ease-out group-hover:scale-[1.04]"
-        />
-
-        {/* Always-on type badge — small enough to leave the screenshot readable. */}
-        <span className="glass absolute left-3 top-3 rounded-full px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.15em] text-circuit">
-          {item.type}
-        </span>
-
-        <div
-          className={`pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent transition-opacity duration-300 ${REVEAL}`}
-        />
-
-        <div
-          className={`absolute inset-x-3 bottom-3 transition-all duration-300 ease-out [@media(hover:hover)]:translate-y-2 [@media(hover:hover)]:group-hover:translate-y-0 ${REVEAL}`}
-        >
-          <div className="glass flex items-center justify-between gap-3 rounded-xl px-4 py-3">
-            <div className="min-w-0">
-              <h3 className="truncate font-display text-sm font-medium text-text-hi">
-                {item.title}
-              </h3>
-              <p className="mt-0.5 truncate text-xs text-text-lo">
-                {item.description}
-              </p>
-            </div>
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 text-text-hi transition-colors duration-200 group-hover:border-growth/60 group-hover:text-growth">
-              <ArrowUpRight size={15} />
-            </span>
+        <div className="flex items-end justify-between gap-4">
+          <div className="min-w-0">
+            <h3 className="truncate font-display text-lg font-bold tracking-[-0.01em] text-text-hi">
+              {item.title}
+            </h3>
+            <p className="mt-1 line-clamp-1 text-sm text-text-lo">
+              {item.description}
+            </p>
           </div>
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-text-hi transition-colors duration-300 group-hover:border-growth/60 group-hover:text-growth">
+            <ArrowUpRight size={16} />
+          </span>
         </div>
-      </Link>
-    </motion.div>
+      </div>
+    </Link>
   );
 }

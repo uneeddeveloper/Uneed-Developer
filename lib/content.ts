@@ -210,7 +210,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Company profile untuk PT. Triputra Khatulistiwa, perusahaan logistik yang melayani pengiriman ke seluruh Kalimantan Barat. Website ini menampilkan layanan, jangkauan pengiriman, dan kanal kontak agar calon klien bisa langsung menghubungi tim mereka.",
     link: "https://pt-triputra.vercel.app/",
-    image: "/portfolio/pt-triputra.png",
+    image: "/portfolio/pt-triputra.webp",
   },
   {
     slug: "las-beauty",
@@ -221,7 +221,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Company profile untuk LAS Brightening, lini produk skincare pencerah kulit. Website menampilkan katalog produk beserta manfaatnya dengan tampilan yang bersih dan sesuai identitas brand kecantikan.",
     link: "https://las-beauty.vercel.app/",
-    image: "/portfolio/las-beauty.png",
+    image: "/portfolio/las-beauty.webp",
   },
   {
     slug: "undangan-digital",
@@ -232,7 +232,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Template undangan pernikahan digital yang bisa dipersonalisasi — nama mempelai, tanggal acara, lokasi, hingga galeri foto — sebagai alternatif undangan cetak yang lebih praktis dibagikan lewat chat.",
     link: "https://undangan-beta-two.vercel.app/",
-    image: "/portfolio/undangan-digital.png",
+    image: "/portfolio/undangan-digital.webp",
   },
   {
     slug: "smart-recruitment",
@@ -243,7 +243,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Platform penerimaan karyawan yang mengintegrasikan proses seleksi dengan bantuan AI, mulai dari pendaftaran kandidat hingga portal untuk memantau status lamaran secara transparan.",
     link: "https://smart-recruit-rouge.vercel.app/portal",
-    image: "/portfolio/smart-recruitment.png",
+    image: "/portfolio/smart-recruitment.webp",
   },
   {
     slug: "edugate",
@@ -254,7 +254,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Aplikasi web untuk pengelolaan tugas di lingkungan pendidikan — membantu pengajar mendistribusikan tugas dan siswa memantau serta mengumpulkan pekerjaan mereka dalam satu tempat.",
     link: "https://edugate-ashy.vercel.app/",
-    image: "/portfolio/edugate.png",
+    image: "/portfolio/edugate.webp",
   },
   {
     slug: "raneen-coffee",
@@ -265,7 +265,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Website untuk brand kopi Raneen Coffee, menampilkan profil coffee shop sekaligus e-book seputar kopi sebagai konten tambahan untuk menarik pengunjung.",
     link: "https://hrmnfrmnsyh1210-sys.github.io/raneen-coffee/",
-    image: "/portfolio/raneen-coffee.png",
+    image: "/portfolio/raneen-coffee.webp",
   },
   {
     slug: "service-ac",
@@ -276,7 +276,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Website untuk usaha jasa service dan perawatan AC di Pontianak — menampilkan daftar layanan, jam operasional, dan kanal pemesanan agar pelanggan mudah menghubungi teknisi.",
     link: "https://hrmnfrmnsyh1210-sys.github.io/service-ac/",
-    image: "/portfolio/service-ac.png",
+    image: "/portfolio/service-ac.webp",
   },
   {
     slug: "js-beauty",
@@ -287,7 +287,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Website untuk salon kecantikan panggilan J&S Beauty, menampilkan daftar layanan haircut dan styling beserta cara pemesanan untuk layanan panggilan ke rumah.",
     link: "https://hrmnfrmnsyh1210-sys.github.io/J-S-Beauty/",
-    image: "/portfolio/js-beauty.png",
+    image: "/portfolio/js-beauty.webp",
   },
   {
     slug: "sitara",
@@ -298,7 +298,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     detail:
       "Sistem Tes Akademik Terpadu (SITARA) — platform ujian akademik daring lengkap dengan manajemen soal, sesi ujian terjadwal, dan rekap hasil peserta.",
     link: "https://sitara.simpeda.id/",
-    image: "/portfolio/sitara.png",
+    image: "/portfolio/sitara.webp",
   },
 ];
 

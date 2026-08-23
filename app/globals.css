@@ -96,6 +96,30 @@
     linear-gradient(135deg, color-mix(in srgb, var(--color-circuit) 30%, transparent), color-mix(in srgb, var(--color-growth) 22%, transparent) 55%, color-mix(in srgb, var(--color-text-hi) 7%, transparent) 100%);
 }
 
+/*
+  Marquee track holds two copies of its children, so shifting by half its own
+  width lands the second copy exactly where the first began — a seamless loop.
+
+  Pause is written here rather than as a Tailwind `group-hover:[…]` utility:
+  v4 doesn't emit a rule for that arbitrary property under a variant, so the
+  class silently did nothing. focus-within is included so keyboard users can
+  actually land on a card instead of chasing a moving target.
+*/
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
 @keyframes pulse-node {
   0%, 100% {
     opacity: 0.45;
