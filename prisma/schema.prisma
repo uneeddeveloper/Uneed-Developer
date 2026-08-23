@@ -106,14 +106,16 @@ model PortfolioItem {
   createdAt   DateTime        @default(now())
 }
 
-/// Singleton row (id is always 1) holding the shared "master key" that
-/// gates admin data after login — adapted from the old JSONBin admin,
-/// where no data showed until a Master Key + Bin ID were configured.
-/// Here it's a second secret an admin must enter once per device.
-model AppSecurity {
-  id            Int      @id @default(1)
-  masterKeyHash String?
-  updatedAt     DateTime @updatedAt
+/// Singleton row (id is always 1) holding the JSONBin cloud-backup config —
+/// the old admin's "Database Online" page, re-purposed: JSONBin is no longer
+/// the primary datastore (Prisma/SQLite is), just an optional off-site
+/// snapshot target for Force Upload / Force Download.
+model JsonBinConfig {
+  id         Int       @id @default(1)
+  masterKey  String?
+  binId      String?
+  lastSyncAt DateTime?
+  updatedAt  DateTime  @updatedAt
 }
 
 model ContactMessage {

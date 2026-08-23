@@ -11,7 +11,7 @@ import {
   Image as ImageIcon,
   Layers,
   BarChart3,
-  KeyRound,
+  Cloud,
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -24,7 +24,7 @@ const NAV = [
   { href: "/admin-uneed/portfolio", label: "Portfolio", icon: ImageIcon },
   { href: "/admin-uneed/layanan", label: "Layanan", icon: Layers },
   { href: "/admin-uneed/laporan", label: "Laporan", icon: BarChart3 },
-  { href: "/admin-uneed/keamanan", label: "Keamanan", icon: KeyRound },
+  { href: "/admin-uneed/database", label: "Database", icon: Cloud },
 ];
 
 export function Sidebar({
