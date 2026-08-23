@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
@@ -35,7 +36,24 @@ export function ServicesCatalog() {
             description="Klik salah satu kategori untuk lihat paket & detailnya. Setiap paket bisa langsung dipesan lewat WhatsApp — pesan Anda sudah otomatis terisi, tidak perlu ketik ulang dari awal."
           />
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="relative mx-auto mt-14 aspect-[16/10] w-full max-w-3xl"
+          >
+            <Image
+              src="/visuals/workspace.webp"
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="object-contain mix-blend-screen [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_92%)]"
+            />
+          </motion.div>
+
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICE_CATEGORIES.map((category, i) => (
               <motion.div
                 key={category.slug}

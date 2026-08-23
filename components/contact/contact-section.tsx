@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send } from "lucide-react";
 import { Container } from "@/components/ui/container";
@@ -66,6 +67,25 @@ export function ContactSection() {
           label="Kontak kami"
           title="Mulai Proyek Anda Hari Ini"
           description="Siap mentransformasi bisnis Anda dengan teknologi? Hubungi kami via WhatsApp atau DM Instagram untuk respon cepat."
+          action={
+            <div className="glass flex items-center gap-3 rounded-full py-2 pl-2 pr-5">
+              <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-circuit/10">
+                <Image
+                  src="/visuals/avatar-dev.webp"
+                  alt=""
+                  fill
+                  sizes="36px"
+                  className="object-cover object-top"
+                />
+              </span>
+              <span className="text-left text-xs leading-tight text-text-lo">
+                Tim kami yang akan membalas
+                <span className="mt-0.5 block text-text-hi">
+                  Biasanya dalam beberapa jam
+                </span>
+              </span>
+            </div>
+          }
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">

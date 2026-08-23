@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AmbientGlow } from "@/components/ui/ambient-glow";
 import { InlineImage } from "@/components/ui/inline-image";
-import { PORTFOLIO } from "@/lib/content";
 
 const STATS = [
   { value: "9+", label: "Project rilis" },
@@ -38,7 +37,7 @@ export function Hero() {
           className="mx-auto mt-8 max-w-5xl text-center font-display text-[3rem] font-bold leading-[0.98] tracking-[-0.03em] text-text-hi sm:text-[4.5rem] lg:text-[6rem]"
         >
           Bangun
-          <InlineImage src={PORTFOLIO[0].image} alt="" />
+          <InlineImage src="/visuals/team-pair.webp" alt="" />
           Aplikasi
           <br />
           Impian{" "}
