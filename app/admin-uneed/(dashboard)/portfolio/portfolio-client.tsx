@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
-import { Plus, Pencil, ExternalLink } from "lucide-react";
+import { Plus, Pencil, ExternalLink, ImageOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/admin/modal";
 import { Field, TextInput, TextArea, Select } from "@/components/admin/form-field";
@@ -37,20 +37,35 @@ export function PortfolioClient({
 }) {
   const [editing, setEditing] = useState<Item | "new" | null>(null);
   const [query, setQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
   const filtered = items.filter((i) =>
     `${i.title} ${i.category.name} ${i.description}`.toLowerCase().includes(query.toLowerCase())
   );
 
+  function isValidImage(src: string) {
+    return src.startsWith("/") || /^https?:\/\//.test(src);
+  }
+
+  function openEdit(item: Item | "new") {
+    setError(null);
+    setEditing(item);
+  }
+
   function handleSubmit(formData: FormData) {
+    setError(null);
     startTransition(async () => {
-      if (editing === "new") {
-        await createPortfolioItem(formData);
-      } else if (editing) {
-        await updatePortfolioItem(editing.id, formData);
+      try {
+        if (editing === "new") {
+          await createPortfolioItem(formData);
+        } else if (editing) {
+          await updatePortfolioItem(editing.id, formData);
+        }
+        setEditing(null);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Gagal menyimpan.");
       }
-      setEditing(null);
     });
   }
 
@@ -63,7 +78,7 @@ export function PortfolioClient({
           placeholder="Cari judul, kategori, atau deskripsi..."
           className="w-full max-w-sm rounded-lg border border-white/10 bg-ink/60 px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none focus:border-circuit/70 sm:w-auto"
         />
-        <Button variant="primary" onClick={() => setEditing("new")} disabled={categories.length === 0}>
+        <Button variant="primary" onClick={() => openEdit("new")} disabled={categories.length === 0}>
           <Plus size={16} />
           Tambah Portfolio
         </Button>
@@ -78,8 +93,12 @@ export function PortfolioClient({
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {filtered.map((item) => (
           <div key={item.id} className="glass flex min-w-0 gap-4 rounded-2xl p-4">
-            <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl bg-ink">
-              <Image src={item.image} alt={item.title} fill sizes="112px" className="object-cover object-top" />
+            <div className="relative flex h-20 w-28 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-ink">
+              {isValidImage(item.image) ? (
+                <Image src={item.image} alt={item.title} fill sizes="112px" className="object-cover object-top" />
+              ) : (
+                <ImageOff size={20} className="text-text-lo" />
+              )}
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-start justify-between gap-2">
@@ -94,7 +113,7 @@ export function PortfolioClient({
                 <div className="flex shrink-0 items-center gap-1">
                   <button
                     type="button"
-                    onClick={() => setEditing(item)}
+                    onClick={() => openEdit(item)}
                     aria-label="Edit"
                     className="flex h-7 w-7 items-center justify-center rounded-lg text-text-lo transition-colors hover:bg-white/5 hover:text-text-hi"
                   >
@@ -127,7 +146,10 @@ export function PortfolioClient({
 
       <Modal
         open={editing !== null}
-        onClose={() => setEditing(null)}
+        onClose={() => {
+          setEditing(null);
+          setError(null);
+        }}
         title={editing === "new" ? "Tambah Portfolio" : "Edit Portfolio"}
       >
         <form action={handleSubmit} className="flex flex-col gap-4">
@@ -197,6 +219,11 @@ export function PortfolioClient({
               />
             </Field>
           </div>
+          {error && (
+            <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
+              {error}
+            </p>
+          )}
           <Button type="submit" variant="primary" className="mt-2 justify-center" disabled={pending}>
             {pending ? "Menyimpan..." : "Simpan"}
           </Button>

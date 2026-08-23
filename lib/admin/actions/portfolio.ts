@@ -11,6 +11,16 @@ function requireString(formData: FormData, key: string) {
   return value.trim();
 }
 
+/** next/image throws (crashing the whole list) on any src that isn't a
+ * root-relative path or absolute URL — reject anything else up front. */
+function requireImagePath(formData: FormData) {
+  const image = requireString(formData, "image");
+  if (!image.startsWith("/") && !/^https?:\/\//.test(image)) {
+    throw new Error('URL gambar harus diawali "/" (file di /public) atau "http(s)://"');
+  }
+  return image;
+}
+
 function slugify(text: string) {
   return text
     .toLowerCase()
@@ -35,7 +45,7 @@ export async function createPortfolioItem(formData: FormData) {
   const categoryId = requireString(formData, "categoryId");
   const description = requireString(formData, "description");
   const detail = requireString(formData, "detail");
-  const image = requireString(formData, "image");
+  const image = requireImagePath(formData);
   const link = readOptional(formData, "link");
 
   let slug = slugify(title);
@@ -56,7 +66,7 @@ export async function updatePortfolioItem(id: string, formData: FormData) {
   const categoryId = requireString(formData, "categoryId");
   const description = requireString(formData, "description");
   const detail = requireString(formData, "detail");
-  const image = requireString(formData, "image");
+  const image = requireImagePath(formData);
   const link = readOptional(formData, "link");
 
   const updated = await prisma.portfolioItem.update({

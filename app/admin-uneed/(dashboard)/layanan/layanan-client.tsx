@@ -38,35 +38,57 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
   const [openId, setOpenId] = useState<string | null>(categories[0]?.id ?? null);
   const [editingCategory, setEditingCategory] = useState<CategoryEdit | null>(null);
   const [editingService, setEditingService] = useState<ServiceEdit | null>(null);
+  const [categoryError, setCategoryError] = useState<string | null>(null);
+  const [serviceError, setServiceError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
+  function openCategory(cat: CategoryEdit) {
+    setCategoryError(null);
+    setEditingCategory(cat);
+  }
+
+  function openService(edit: ServiceEdit) {
+    setServiceError(null);
+    setEditingService(edit);
+  }
+
   function submitCategory(formData: FormData) {
+    setCategoryError(null);
     startTransition(async () => {
-      if (editingCategory === "new") {
-        await createServiceCategory(formData);
-      } else if (editingCategory) {
-        await updateServiceCategory(editingCategory.id, formData);
+      try {
+        if (editingCategory === "new") {
+          await createServiceCategory(formData);
+        } else if (editingCategory) {
+          await updateServiceCategory(editingCategory.id, formData);
+        }
+        setEditingCategory(null);
+      } catch (e) {
+        setCategoryError(e instanceof Error ? e.message : "Gagal menyimpan.");
       }
-      setEditingCategory(null);
     });
   }
 
   function submitService(formData: FormData) {
     if (!editingService) return;
+    setServiceError(null);
     startTransition(async () => {
-      if (editingService.service === "new") {
-        await createService(formData);
-      } else {
-        await updateService(editingService.service.id, formData);
+      try {
+        if (editingService.service === "new") {
+          await createService(formData);
+        } else {
+          await updateService(editingService.service.id, formData);
+        }
+        setEditingService(null);
+      } catch (e) {
+        setServiceError(e instanceof Error ? e.message : "Gagal menyimpan.");
       }
-      setEditingService(null);
     });
   }
 
   return (
     <>
       <div className="flex justify-end">
-        <Button variant="primary" onClick={() => setEditingCategory("new")}>
+        <Button variant="primary" onClick={() => openCategory("new")}>
           <Plus size={16} />
           Tambah Kategori
         </Button>
@@ -107,7 +129,7 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
                 <div className="flex shrink-0 items-center gap-1">
                   <button
                     type="button"
-                    onClick={() => setEditingCategory(cat)}
+                    onClick={() => openCategory(cat)}
                     aria-label="Edit kategori"
                     className="flex h-8 w-8 items-center justify-center rounded-lg text-text-lo transition-colors hover:bg-white/5 hover:text-text-hi"
                   >
@@ -144,7 +166,7 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
                             </span>
                             <button
                               type="button"
-                              onClick={() => setEditingService({ categoryId: cat.id, service: s })}
+                              onClick={() => openService({ categoryId: cat.id, service: s })}
                               aria-label="Edit paket"
                               className="flex h-8 w-8 items-center justify-center rounded-lg text-text-lo transition-colors hover:bg-white/5 hover:text-text-hi"
                             >
@@ -161,7 +183,7 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
                     <div className="p-5 pt-3">
                       <button
                         type="button"
-                        onClick={() => setEditingService({ categoryId: cat.id, service: "new" })}
+                        onClick={() => openService({ categoryId: cat.id, service: "new" })}
                         className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-medium text-text-hi transition-colors hover:border-growth/60 hover:text-growth"
                       >
                         <Plus size={13} />
@@ -178,7 +200,10 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
 
       <Modal
         open={editingCategory !== null}
-        onClose={() => setEditingCategory(null)}
+        onClose={() => {
+          setEditingCategory(null);
+          setCategoryError(null);
+        }}
         title={editingCategory === "new" ? "Tambah Kategori" : "Edit Kategori"}
       >
         <form action={submitCategory} className="flex flex-col gap-4">
@@ -199,6 +224,11 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
               placeholder="Deskripsi singkat kategori ini"
             />
           </Field>
+          {categoryError && (
+            <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
+              {categoryError}
+            </p>
+          )}
           <Button type="submit" variant="primary" className="mt-2 justify-center" disabled={pending}>
             {pending ? "Menyimpan..." : "Simpan"}
           </Button>
@@ -207,7 +237,10 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
 
       <Modal
         open={editingService !== null}
-        onClose={() => setEditingService(null)}
+        onClose={() => {
+          setEditingService(null);
+          setServiceError(null);
+        }}
         title={editingService?.service === "new" ? "Tambah Paket" : "Edit Paket"}
       >
         <form action={submitService} className="flex flex-col gap-4">
@@ -242,6 +275,11 @@ export function LayananClient({ categories }: { categories: CategoryRow[] }) {
               placeholder="mis. Mulai Rp 2.000.000"
             />
           </Field>
+          {serviceError && (
+            <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
+              {serviceError}
+            </p>
+          )}
           <Button type="submit" variant="primary" className="mt-2 justify-center" disabled={pending}>
             {pending ? "Menyimpan..." : "Simpan"}
           </Button>

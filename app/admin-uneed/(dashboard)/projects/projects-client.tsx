@@ -22,20 +22,31 @@ type Project = {
 export function ProjectsClient({ projects }: { projects: Project[] }) {
   const [editing, setEditing] = useState<Project | "new" | null>(null);
   const [query, setQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
   const filtered = projects.filter((p) =>
     `${p.name} ${p.category} ${p.client?.name ?? ""}`.toLowerCase().includes(query.toLowerCase())
   );
 
+  function openEdit(project: Project | "new") {
+    setError(null);
+    setEditing(project);
+  }
+
   function handleSubmit(formData: FormData) {
+    setError(null);
     startTransition(async () => {
-      if (editing === "new") {
-        await createProject(formData);
-      } else if (editing) {
-        await updateProject(editing.id, formData);
+      try {
+        if (editing === "new") {
+          await createProject(formData);
+        } else if (editing) {
+          await updateProject(editing.id, formData);
+        }
+        setEditing(null);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Gagal menyimpan.");
       }
-      setEditing(null);
     });
   }
 
@@ -48,7 +59,7 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
           placeholder="Cari nama project, kategori, atau klien..."
           className="w-full max-w-sm rounded-lg border border-white/10 bg-ink/60 px-3 py-2.5 text-sm text-text-hi placeholder:text-text-lo/60 outline-none focus:border-circuit/70 sm:w-auto"
         />
-        <Button variant="primary" onClick={() => setEditing("new")}>
+        <Button variant="primary" onClick={() => openEdit("new")}>
           <Plus size={16} />
           Project Baru
         </Button>
@@ -107,7 +118,7 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
                   <div className="flex items-center justify-end gap-1">
                     <button
                       type="button"
-                      onClick={() => setEditing(p)}
+                      onClick={() => openEdit(p)}
                       aria-label="Edit"
                       className="flex h-8 w-8 items-center justify-center rounded-lg text-text-lo transition-colors hover:bg-white/5 hover:text-text-hi"
                     >
@@ -124,7 +135,10 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
 
       <Modal
         open={editing !== null}
-        onClose={() => setEditing(null)}
+        onClose={() => {
+          setEditing(null);
+          setError(null);
+        }}
         title={editing === "new" ? "Project Baru" : "Edit Project"}
       >
         <form action={handleSubmit} className="flex flex-col gap-4">
@@ -181,6 +195,11 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
               }
             />
           </Field>
+          {error && (
+            <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
+              {error}
+            </p>
+          )}
           <Button type="submit" variant="primary" className="mt-2 justify-center" disabled={pending}>
             {pending ? "Menyimpan..." : "Simpan"}
           </Button>

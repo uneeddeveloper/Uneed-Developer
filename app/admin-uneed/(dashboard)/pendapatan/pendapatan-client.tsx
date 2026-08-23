@@ -35,6 +35,7 @@ export function PendapatanClient({
   const [editing, setEditing] = useState<Transaction | "new" | null>(null);
   const [type, setType] = useState<"income" | "expense">("income");
   const [query, setQuery] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
   const filtered = transactions.filter((t) =>
@@ -44,16 +45,22 @@ export function PendapatanClient({
   function openEdit(t: Transaction | "new") {
     setType(t === "new" ? "income" : (t.type as "income" | "expense"));
     setEditing(t);
+    setError(null);
   }
 
   function handleSubmit(formData: FormData) {
+    setError(null);
     startTransition(async () => {
-      if (editing === "new") {
-        await createTransaction(formData);
-      } else if (editing) {
-        await updateTransaction(editing.id, formData);
+      try {
+        if (editing === "new") {
+          await createTransaction(formData);
+        } else if (editing) {
+          await updateTransaction(editing.id, formData);
+        }
+        setEditing(null);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Gagal menyimpan.");
       }
-      setEditing(null);
     });
   }
 
@@ -141,7 +148,10 @@ export function PendapatanClient({
 
       <Modal
         open={editing !== null}
-        onClose={() => setEditing(null)}
+        onClose={() => {
+          setEditing(null);
+          setError(null);
+        }}
         title={editing === "new" ? "Catat Transaksi" : "Edit Transaksi"}
       >
         <form action={handleSubmit} className="flex flex-col gap-4">
@@ -221,6 +231,11 @@ export function PendapatanClient({
             </div>
           )}
 
+          {error && (
+            <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
+              {error}
+            </p>
+          )}
           <Button type="submit" variant="primary" className="mt-2 justify-center" disabled={pending}>
             {pending ? "Menyimpan..." : "Simpan"}
           </Button>
