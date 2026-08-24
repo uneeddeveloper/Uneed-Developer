@@ -40,6 +40,7 @@ export function PortfolioCard({
         fill
         priority={priority}
         sizes={sizes}
+        unoptimized={!item.image.startsWith("/")}
         className="object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
       />
 

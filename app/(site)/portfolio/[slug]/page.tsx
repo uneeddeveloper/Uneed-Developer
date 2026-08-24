@@ -83,6 +83,7 @@ export default async function PortfolioDetailPage({
               fill
               sizes="100vw"
               priority
+              unoptimized={!item.image.startsWith("/")}
               className="object-cover object-top"
             />
           </div>

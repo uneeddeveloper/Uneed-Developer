@@ -95,7 +95,14 @@ export function PortfolioClient({
           <div key={item.id} className="glass flex min-w-0 gap-4 rounded-2xl p-4">
             <div className="relative flex h-20 w-28 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-ink">
               {isValidImage(item.image) ? (
-                <Image src={item.image} alt={item.title} fill sizes="112px" className="object-cover object-top" />
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  sizes="112px"
+                  unoptimized={!item.image.startsWith("/")}
+                  className="object-cover object-top"
+                />
               ) : (
                 <ImageOff size={20} className="text-text-lo" />
               )}
