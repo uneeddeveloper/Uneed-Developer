@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Image from "next/image";
-import { Plus, Pencil, ExternalLink, ImageOff } from "lucide-react";
+import { Plus, Pencil, ExternalLink, ImageOff, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/admin/modal";
 import { Field, TextInput, TextArea, Select } from "@/components/admin/form-field";
@@ -38,6 +38,8 @@ export function PortfolioClient({
   const [editing, setEditing] = useState<Item | "new" | null>(null);
   const [query, setQuery] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
   const [pending, startTransition] = useTransition();
 
   const filtered = items.filter((i) =>
@@ -51,6 +53,17 @@ export function PortfolioClient({
   function openEdit(item: Item | "new") {
     setError(null);
     setEditing(item);
+    setImageUrl(item !== "new" ? item.image : "");
+    setLinkUrl(item !== "new" ? item.link ?? "" : "");
+  }
+
+  /** Uses WordPress's free mshots service — no API key, no upload backend —
+   * to grab a live screenshot of the linked site's homepage as the thumbnail. */
+  function screenshotFromLink() {
+    if (!linkUrl.trim()) return;
+    // `t` busts the browser's own cache so re-clicking re-checks mshots for
+    // the real screenshot once it's done generating (see hint text below).
+    setImageUrl(`https://s.wordpress.com/mshots/v1/${encodeURIComponent(linkUrl.trim())}?w=1200&h=750&t=${Date.now()}`);
   }
 
   function handleSubmit(formData: FormData) {
@@ -208,24 +221,58 @@ export function PortfolioClient({
               placeholder="Tampil di halaman detail project"
             />
           </Field>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="URL Gambar">
-              <TextInput
-                name="image"
-                required
-                defaultValue={editing !== "new" ? editing?.image : ""}
-                placeholder="/portfolio/nama.webp"
-              />
-            </Field>
-            <Field label="Link Website (opsional)">
+          <Field label="Link Website (opsional)">
+            <div className="flex gap-2">
               <TextInput
                 name="link"
                 type="url"
-                defaultValue={editing !== "new" ? editing?.link ?? "" : ""}
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
                 placeholder="https://..."
+                className="flex-1"
               />
-            </Field>
-          </div>
+              <button
+                type="button"
+                onClick={screenshotFromLink}
+                disabled={!linkUrl.trim()}
+                className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-medium text-text-hi transition-colors hover:border-circuit/60 hover:text-circuit disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <Camera size={13} />
+                Ambil Screenshot
+              </button>
+            </div>
+            <p className="mt-1 text-[11px] text-text-lo">
+              Screenshot butuh beberapa detik untuk website yang baru pertama kali diambil — klik lagi kalau preview masih kosong/placeholder.
+            </p>
+          </Field>
+          <Field label="URL Gambar">
+            <div className="flex gap-3">
+              <TextInput
+                name="image"
+                required
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="/portfolio/nama.webp atau klik Ambil Screenshot di atas"
+                className="flex-1"
+              />
+              <div className="relative h-11 w-16 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-ink">
+                {isValidImage(imageUrl) ? (
+                  <Image
+                    src={imageUrl}
+                    alt="Preview"
+                    fill
+                    sizes="64px"
+                    unoptimized={!imageUrl.startsWith("/")}
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <ImageOff size={14} className="text-text-lo" />
+                  </div>
+                )}
+              </div>
+            </div>
+          </Field>
           {error && (
             <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
               {error}
